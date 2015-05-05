@@ -175,13 +175,12 @@ class BaseHandler(SessionBaseHandler):
 		user = yield self.db.member.find_one({
 			"username": touser
 		})
-		if "email" in user and user.get("allowemail"):
+		if self.settings["email"]["method"] == "mailgun" and "email" in user and user.get("allowemail"):
 			Sendemail(self.settings.get("email")).send(
 				title=u"来自%s的提醒：%s" % (self.settings["site"]["webname"], content),
 				content=u"%s <br /> <a href=\"%s%s\" target=\"_blank\">点击查看</a>"
 				        % (content, self.settings.get("base_url"), jump),
-				to=user["email"],
-				orgin="root@waf.science"
+				to=user["email"]
 			)
 		raise gen.Return(ret)
 
