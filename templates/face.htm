@@ -1,0 +1,52 @@
+{% extends "base.htm" %}
+
+{% block header_title %}头像上传{% end %}
+{% block header_static %}
+<link rel="stylesheet" href="{{ static_url('assets/cropbox/css/style.css') }}">
+{% end %}
+{% block body %}
+{% include "header.htm" %}
+<div class="am-container ">
+    <div class="am-g">
+        <div class="am-u-lg-6 am-u-md-6 am-u-sm-6">
+            <div class="imageBox">
+                <div class="thumbBox"></div>
+                <div class="spinner" >Loading...</div>
+            </div>
+            <div class="action">
+                <div class="new-contentarea tc"> <a href="#" class="upload-img">
+                  <label for="upload-file">上传头像</label>
+                  </a>
+                  <input type="file" name="upload-file" id="upload-file" />
+                </div>
+                <input type="button" id="btnCrop"  class="Btnsty_peyton" value="裁切">
+                <input type="button" id="btnZoomIn" class="Btnsty_peyton" value="+"  >
+                <input type="button" id="btnZoomOut" class="Btnsty_peyton" value="-" >
+            </div>
+        </div>
+        <div class="am-u-lg-3 am-u-md-3 am-u-sm-3">
+            <div class="cropped"></div>
+        </div>
+        <div class="am-u-lg-3 am-u-md-3 am-u-sm-3">
+            <input type="button" id="upload-btn"  class="Btnsty_peyton upbtn" value="上传头像">
+        </div>
+    </div>
+</div>
+
+<div class="am-modal am-modal-alert" tabindex="-1" id="upload-error">
+  <div class="am-modal-dialog">
+    <div class="am-modal-hd">上传出错</div>
+    <div class="am-modal-bd">
+      上传出错，请重试
+    </div>
+    <div class="am-modal-footer">
+      <span class="am-modal-btn">确定</span>
+    </div>
+  </div>
+</div>
+
+{% end %}
+{% block footer_static %}
+    <script src="{{ static_url('assets/js/app.js') }}"></script>
+    <script src="{{ static_url('assets/cropbox/js/cropbox.js') }}"></script>
+{% end %}

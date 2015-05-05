@@ -1,0 +1,91 @@
+{% extends "base.htm" %}
+{% block header_title %}邀请码管理 - 后台管理页面{% end %}
+
+{% block body %}
+<div class="am-cf admin-main">
+  {% include "sidebar.htm" %}
+
+  <!-- content start -->
+  <div class="admin-content">
+
+    <div class="am-cf am-padding">
+      <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">首页</strong> / <small>邀请码列表</small></div>
+    </div>
+
+    <div class="am-g">
+      <div class="am-u-lg-offset-7 am-u-lg-5 am-u-md-12 am-u-sm-12">
+        <form method="post" action="/admin/invite" id="invite-act">
+        <div class="am-input-group am-input-group-sm am-fr">
+              <button class="am-btn am-btn-danger act" name="expire">删除过期</button>
+              <button class="am-btn am-btn-success act" name="create">生成</button>
+              <div class="am-dropdown" data-am-dropdown>
+                  <button class="am-btn am-btn-primary am-dropdown-toggle" data-am-dropdown-toggle>筛选邀请码 <span class="am-icon-caret-down"></span></button>
+                  <ul class="am-dropdown-content">
+                    <li><a href="/manage/invite">所有的</a></li>
+                    <li class="am-divider"></li>
+                    <li><a href="/manage/invite?act=nouse">尚未使用</a></li>
+                    <li class="am-divider"></li>
+                    <li><a href="/manage/invite?act=used">已被使用的</a></li>
+                    <li class="am-divider"></li>
+                    <li><a href="/manage/invite?act=expire">过期的</a></li>
+                  </ul>
+                </div>
+        </div>
+        <input type="hidden" name="action">
+        {% raw xsrf_form_html() %}
+        </form>
+      </div>
+      <div class="am-u-sm-12">
+        <table class="am-table am-table-bd am-table-striped admin-content-table">
+          <thead>
+          <tr>
+            <th>ID</th><th>邀请码</th><th>生成时间</th><th>使用者</th><th width="20%">管理</th>
+          </tr>
+          </thead>
+          <tbody>
+          {% set i = 1 %}
+          {% for invite in invites %}
+          <tr>
+              <td>{{ i }}</td>
+              <td><code class="invite-code-{{ i }}">{{ invite["code"] }}</code></td>
+              <td>{{ humantime(invite.get('time')) }}</td>
+              <td>
+                  {% if invite.get('used') %}
+                  <span class="am-badge am-badge-success">{{ invite['user'] }}</span>
+                  {% else %}
+                  <span class="am-badge am-badge-warning">尚未使用</span>
+                  {% end %}
+              </td>
+              <td>
+                  <form method="post" action="/admin/invite">
+                  <div class="am-btn-group am-btn-group-xs">
+                        <button class="am-btn am-btn-default am-btn-xs am-hide-sm-only zero-copy" name="code-{{ i }}"><span class="am-icon-copy"></span> 复制</button>
+                        <button type="submit" class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only"><span class="am-icon-trash-o"></span> 删除</button>
+                        <input type="hidden" name="code" value="{{ invite['code'] }}">
+                        <input type="hidden" name="action" value="delete">
+                  </div>
+                  {% raw xsrf_form_html() %}
+                  </form>
+              </td>
+          </tr>
+          {% set i += 1 %}
+          {% end %}
+          </tbody>
+        </table>
+        {% raw pagenav(count = count, url = '/manage/invite/%d', each = each, now = page,
+          end = '<div class="am-margin-bottom"></div></ul>') %}
+        <div class="am-cf am-margin-bottom-xl am-margin-top-xl"></div>
+      </div>
+    </div>
+
+  </div>
+  <!-- content end -->
+
+</div>
+
+<a class="am-icon-btn am-icon-th-list am-show-sm-only admin-menu" data-am-offcanvas="{target: '#admin-offcanvas'}"></a>
+
+{% end %}
+{% block footer_static %}
+<script src="{{ static_url('assets/ZeroClipboard/ZeroClipboard.min.js') }}"></script>
+{% end %}

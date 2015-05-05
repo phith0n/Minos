@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="{{ handler.settings['site']['description'] }}">
+    <meta name="keywords" content="{{ handler.settings['site']['keyword'] }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>{% block header_title %}Site Title{% end %} - {{ handler.settings['site']['webname'] }}</title>
+    <meta charset="utf-8" />
+    <meta name="renderer" content="webkit">
+    <base href="{{ base_url }}">
+    <link rel="stylesheet" href="{{ static_url('assets/css/amazeui.min.css') }}">
+    <link rel="stylesheet" href="{{ static_url('assets/css/app.css') }}">
+    {% block header_static %}{% end %}
+</head>
+<body>
+<div class="minos-main">
+{% block body %}Hello world! {% end %}
+</div>
+<footer class="footer" id="footer">
+  <p>
+    <a href="http://www.leavesongs.com/" target="_blank">Designed and built with all the love in the world by Phithon!</a><br>
+    Thanks to all open source software: nginx,python,tornado,redis,mongodb,amazeui,motor,ckeditor
+  </p>
+  <input type="hidden" id="login-name" value="{% if current_user %}{{ current_user['username'] }}{% end %}">
+</footer>
+
+<!--[if (gte IE 9)|!(IE)]><!-->
+<script src="{{ static_url('assets/js/jquery.min.js') }}"></script>
+<script src="{{ static_url('assets/js/amazeui.min.js') }}"></script>
+<!--<![endif]-->
+<!--[if lte IE 8 ]>
+<script src="{{ static_url('assets/js/jquery-1.11.1.min.js') }}"></script>
+<![endif]-->
+{% block footer_static %}{% end %}
+</body>
+</html>

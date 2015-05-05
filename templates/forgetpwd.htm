@@ -1,0 +1,55 @@
+{% extends "base.htm" %}
+
+{% block header_title %}找回密码{% end %}
+{% block body %}
+{% include "header.htm" %}
+<div class="am-g">
+  <div class="am-u-lg-5 am-u-md-6 am-u-sm-centered">
+    <div class="am-text-center am-margin-top-lg">找回密码 <small class="am-link-muted">填写了邮箱的用户可以找回密码</small></div>
+    <hr>
+
+    <form class="am-form am-form-horizontal" method="post">
+      {% if success %}
+          <div class="am-alert am-alert-success" data-am-alert>
+              <button type="button" class="am-close">&times;</button>
+              <p class="am-text-sm">邮件已经发送到你的邮箱啦，请进入邮箱修改密码。</p>
+          </div>
+        {% end %}
+
+      <div class="am-form-group">
+        <label class="am-u-sm-3 am-form-label">邮箱</label>
+        <div class="am-u-sm-9">
+          <input type="text" name="email" placeholder="填写你的邮箱">
+        </div>
+      </div>
+
+      <div class="am-form-group">
+        <label class="am-u-sm-3 am-form-label">验证码</label>
+        <div class="am-u-sm-4">
+          <img src="/captcha.png" id="captcha" height="41" />
+        </div>
+        <div class="am-u-sm-5">
+          <input type="text" name="captcha" placeholder="">
+        </div>
+      </div>
+
+      <div class="am-form-group">
+        <div class="am-u-sm-12 am-g-collapse">
+            <div class="am-u-sm-6">
+            </div>
+            <div class="am-btn-toolbar am-u-sm-6 am-text-right">
+                <a class="am-btn am-btn-default" href="/login">返回</a>
+                <button type="submit" class="am-fr am-btn am-btn-secondary">找回密码</button>
+            </div>
+        </div>
+      </div>
+    {% raw xsrf_form_html() %}
+    </form>
+
+    <hr>
+  </div>
+</div>
+{% end %}
+{% block footer_static %}
+    <script src="{{ static_url('assets/js/nologin.js') }}"></script>
+{% end %}

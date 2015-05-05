@@ -1,0 +1,81 @@
+{% extends "base.htm" %}
+
+{% block header_title %}{{ user["username"] }}的资料{% end %}
+{% block body %}
+{% include "header.htm" %}
+
+<div class="am-container">
+    <div class="am-g">
+        <div class="am-u-lg-9">
+            <div class="am-panel am-panel-default">
+              <div class="am-panel-hd">
+                <ol class="minos-breadcrumb am-breadcrumb am-breadcrumb-slash">
+                    <li><a href="/">首页</a></li>
+                    <li class="am-active">{{ user.get('username') }} 的主页</li>
+                </ol>
+              </div>
+              <div class="am-panel-bd minos-sorts">
+                  <blockquote>{{ user.get('signal') }}</blockquote>
+                  {% if user.get('website') and user.get('openwebsite') %}
+                  <small>主页：<a href="{{ user.get('website') }}" target="_blank">{{ user.get('website') }}</a></small>
+                  <br />
+                  {% end %}
+                  {% if user.get('email') and user.get('openemail') %}
+                  <small>Email：<a href="mailto:{{ user.get('email') }}">{{ user.get('email') }}</a></small>
+                  <br />
+                  {% end %}
+                  {% if user.get('qq') and user.get('openqq') %}
+                  <small>QQ：{{ user.get('qq') }}</small>
+                  {% end %}
+              </div>
+              <table class="am-table minos-list am-text-sm am-table-bordered am-table-hover am-scrollable-horizontal">
+                  <tr class="null am-primary">
+                    <td width="">时间</td>
+                    <td width="75%">标题</td>
+                    <td class="am-text-right">板块</td>
+                  </tr>
+                  {% for post in posts %}
+                  <tr class="row">
+                    <td class="am-link-muted">{{ time_span(post.get('time')) }}</td>
+                    <td>
+                        {% if post.get('star') %}<span class="am-text-primary">[精华]</span>{% end %}
+                        <a href="/post/{{ post.get('_id') }}">{{ post.get('title') }}</a>
+                    </td>
+                    <td class="am-text-right"><a href="/sort/{{ post['sort']['_id'] }}">{{ post['sort']['name'] }}</a></td>
+                  </tr>
+                  {% end %}
+              </table>
+              <div class="am-panel-footer">
+                  {% raw pagenav(now = page, count = count, each = each, url = u'/user/detail/'+user.get('username')+u'?page=%d') %}
+                  <div class="am-cf"></div>
+              </div>
+            </div>
+        </div>
+        <div class="am-u-lg-3">
+            {% if user["username"] != current_user["username"] %}
+            <div class="am-panel am-panel-default">
+                <div class="am-panel-bd">
+                    <p class="am-text-center am-text-primary">
+                        <strong>
+                            <a href="/user/detail/{{ user['username'] }}">{{ user["username"] }}</a>
+                        </strong>
+                    </p>
+                    <a href="/user/detail/{{ user['username'] }}"><img src="{{ get_avatar(user['_id']) }}" width="70%"
+                         height="100%" class="am-circle am-center"></a>
+                    <p class="am-text-center am-text-sm">
+                        等级：{% if user["power"] == 20 %}管理员{% else %}普通白帽子{% end %}<br />
+                    </p>
+                </div>
+            </div>
+            {% else %}
+            {% include "self.htm" %}
+            {% end %}
+        </div>
+    </div>
+</div>
+
+
+{% end %}
+{% block footer_static %}
+    <script src="{{ static_url('assets/js/app.js') }}"></script>
+{% end %}

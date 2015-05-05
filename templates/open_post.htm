@@ -1,0 +1,139 @@
+{% extends "base.htm" %}
+
+{% block header_title %}{{ post["title"] }}{% end %}
+{% block header_static %}
+<link rel="stylesheet" href="{{ static_url('assets/ckeditor/plugins/codesnippet/lib/highlight/styles/default.css') }}">
+{% end %}
+{% block body %}
+{% include "header.htm" %}
+
+<div class="am-container">
+    <div class="am-g">
+        <div class="am-u-lg-9 am-u-md-12 am-u-sm-12">
+            <div class="am-panel am-panel-default">
+              <div class="am-panel-hd">
+                  <div class="am-g">
+                    <div class="am-u-sm-1 am-u-md-1 am-u-lg-1 am-hide-sm-down"><img width="48" height="48"
+                      src="{{ get_avatar(user.get('_id')) }}" class="am-comment-avatar" /></div>
+                    <div class="am-u-sm-9 am-u-md-9 am-u-lg-9">
+                        <strong>{{ post["title"] }}</strong><br />
+                        <small><a class="am-comment-author" href="/user/detail/{{ user.get('username') }}">
+                            {{ user.get('username') }}</a> 发表于 {{ humantime(post['time'], span = True) }}
+                            &nbsp;<a href="/sort/{{ post['sort']['_id'] }}"><span class="am-badge am-badge-success">{{ post["sort"]["name"] }}</span></a></small>
+                    </div>
+                    <div class="am-u-sm-2 am-u-md-2 am-u-lg-2 am-text-right am-hide-sm-down">
+                        </div>
+                  </div>
+              </div>
+              <article class="am-article am-margin am-text-break">
+                  <div class="am-article-bd ">
+                      {% raw post["content"] %}
+                  </div>
+                  <hr class="am-article-divider am-hide-sm-down" />
+                  <div class="am-article-bd" >
+                      <ul class="am-list am-list-static am-list-border">
+                        {% if post.get("rank") != 0 or post.get('star') %}
+                        <li>
+                            {% if post.get("rank") > 0 %}<span class="am-badge am-badge-success">奖励{{ post.get('rank') }}金币</span>{% end %}
+                            {% if post.get("rank") < 0 %}<span class="am-badge am-badge-danger">惩罚{{ -post.get('rank') }}金币</span>{% end %}
+                            {% if post.get('star') %}<span class="am-badge am-badge-primary">加精</span>{% end %}
+                            管理员对帖子进行了操作
+                        </li>
+                        {% end %}
+                        {% if len(post['thanks']) %}
+                        <li class="am-text-truncate">
+                            <span class="am-badge am-badge-success">共{{ len(post['thanks']) }}个感谢</span>
+                            <span>{% set thx_user = ','.join(post['thanks']) %}
+                            他们感谢过作者：{{ thx_user }}</span>
+                        </li>
+                        {% end %}
+                        {% if post['charge'] and len(post['buyer']) %}
+                        <li class="am-text-truncate">
+                            <span class="am-badge am-badge-secondary">共{{ len(post['buyer']) }}次购买</span>
+                            {% set buy_user = ','.join(post['buyer']) %}
+                            他们购买了帖子：{{ buy_user }}
+                        </li>
+                        {% end %}
+                      </ul>
+                  </div>
+                  <div class="minos-social am-hide-sm-down bdsharebuttonbox">
+                    <span class="am-text-sm">分享到：</span>
+                    <a href="#" title="分享到微信" class="am-icon-btn am-success am-icon-weixin"></a>
+                    <a href="#" data-cmd="tsina" title="分享到新浪微博" class="am-icon-btn am-danger am-icon-weibo"></a>
+                    <a href="#" data-cmd="qzone" title="分享到QQ空间" class="am-icon-btn am-primary am-icon-qq"></a>
+                  </div>
+                  <hr class="am-article-divider" />
+              </article>
+              <div class="am-panel-bd">
+                {% if len(post["comment"]) %}
+                <ul class="am-comments-list">
+                  {% for comment in post["comment"] %}
+                  <li class="am-comment">
+                    <a name="{{ comment['_id'] }}"></a>
+                    <a href="/user/detail?u={{ comment['user']['username'] }}">
+                      <img src="{{ get_avatar(comment['user']['id']) }}" class="am-comment-avatar" width="48"
+                           height="48">
+                    </a>
+                    <div class="am-comment-main">
+                      <header class="am-comment-hd">
+                        <div class="am-comment-meta">
+                          <a href="/user/detail/{{ comment['user']['username'] }}" class="am-comment-author">{{ comment['user']['username'] }}</a> 评论于 {{ humantime(comment['time']) }}
+                        </div>
+                      </header>
+                      <div class="am-comment-bd am-text-sm">
+                        <p class="minos-at">{% raw nl2br(comment['content']) %}</p>
+                      </div>
+                    </div>
+                  </li>
+                  {% end %}
+                </ul>
+                {% else %}
+                  <span class="am-text-primary am-text-sm">还没有人评论，你不要顶一下楼主么？</span>
+                {% end %}
+              </div>
+              <hr class="minos-hr " />
+              <div class="am-panel-bd">
+                <span class="am-text-sm">登录以后才可以发表评论~ <a href="/register">点击注册</a> <a href="/login">点击登录</a> </span>
+              </div>
+            </div>
+        </div>
+
+        <div class="am-u-lg-3 am-show-lg-only">
+
+            <div class="am-panel am-panel-default">
+                <div class="am-panel-bd">
+                    <p class="am-text-center am-text-primary">
+                        <strong>
+                            <a href="/user/detail/{{ user['username'] }}">{{ user["username"] }}</a>
+                        </strong>
+                    </p>
+                    <a href="/user/detail/{{ user['username'] }}"><img src="{{ get_avatar(user['_id']) }}" width="70%"
+                         height="100%" class="am-circle am-center"></a>
+                    <p class="am-text-center am-text-sm">
+                        <pre>{{ user.get('signal') }}</pre>
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="am-modal am-modal-no-btn" tabindex="-1" id="show-qrcode">
+  <div class="am-modal-dialog">
+    <div class="am-modal-hd">微信扫描分享
+      <a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close>&times;</a>
+    </div>
+    <div class="am-modal-bd am-g" >
+        <div id="qrcode"></div>
+    </div>
+  </div>
+</div>
+
+{% end %}
+{% block footer_static %}
+<script src="{{ static_url('assets/ckeditor/plugins/codesnippet/lib/highlight/highlight.pack.js') }}"></script>
+<script src="{{ static_url('assets/js/app.js') }}"></script>
+<script src="{{ static_url('assets/js/post.js') }}"></script>
+<script src="{{ static_url('assets/js/nologin.js') }}"></script>
+{% end %}

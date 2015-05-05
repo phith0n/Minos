@@ -1,0 +1,40 @@
+{% extends "base.htm" %}
+
+{% block header_title %}短消息详情{% end %}
+{% block body %}
+{% include "header.htm" %}
+    {% if not message['from'] %}
+    {% set message['from'] = '系统' %}
+    {% end %}
+<div class="am-container">
+    <div class="am-g">
+        <div class="am-u-lg-9 am-u-sm-12">
+            <div class="am-panel am-panel-default">
+                <div class="am-panel-hd">
+                    <ol class="minos-breadcrumb am-breadcrumb am-breadcrumb-slash">
+                        <li><a href="/">首页</a></li>
+                        <li><a href="/message">短消息</a></li>
+                        <li class="am-active">{{ message['from'] }} 给 {{ message['to'] }} 的短消息</li>
+                    </ol>
+                </div>
+                <div class="am-panel-bd am-text-sm">
+                    {{ message['content'] }}
+                </div>
+                {% if message.get('jump') %}
+                <div class="am-panel-bd am-text-sm">
+                    <a href="{{ message.get('jump') }}">点击查看...</a>
+                </div>
+                {% end %}
+            </div>
+        </div>
+        <div class="am-u-lg-3">
+            {% include "self.htm" %}
+        </div>
+    </div>
+</div>
+
+
+{% end %}
+{% block footer_static %}
+    <script src="{{ static_url('assets/js/app.js') }}"></script>
+{% end %}

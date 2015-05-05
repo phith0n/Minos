@@ -1,0 +1,16 @@
+<div class="am-panel am-panel-default">
+    <div class="am-panel-bd">
+        <p class="am-text-center am-text-primary">
+            <strong>
+                <a href="/user/detail/{{ current_user['username'] }}">{{ current_user["username"] }}</a>
+            </strong>
+        </p>
+        <a href="/user/detail/{{ current_user['username'] }}"><img src="{{ get_avatar(current_user['_id']) }}" width="70%"
+             height="100%" class="am-circle am-center"></a>
+        <p class="am-text-center am-text-sm">
+            我的金币：{{ current_user["money"] }}<br />
+            等级：{% if power == 'admin' %}管理员{% else %}普通白帽子{% end %}<br />
+            <a href="/user/bookmark" class="">我的收藏</a> | <a href="/user/like" class="">我的喜欢</a>
+        </p>
+    </div>
+</div>

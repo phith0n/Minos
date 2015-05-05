@@ -1,0 +1,47 @@
+{% extends "base.htm" %}
+
+{% block header_title %}{{ keyword }}的搜索结果{% end %}
+{% block body %}
+{% include "header.htm" %}
+<div class="am-container">
+    <div class="am-g">
+        <div class="am-u-lg-9">
+            <div class="am-panel am-panel-default">
+              <div class="am-panel-hd">
+                <h3 class="am-panel-title"><a href="/">首页</a> &gt; {{ keyword }}的搜索结果</h3>
+              </div>
+              <div class="am-panel-bd minos-sorts">
+                  总共找到{{ count }}篇相关文章
+              </div>
+              <table class="am-table minos-list am-text-sm am-table-bordered am-table-hover am-scrollable-horizontal">
+                  <tr class="null am-primary">
+                    <td width="15%">时间</td>
+                    <td width="65%">标题</td>
+                    <td class="am-text-center" width="10%">状态</td>
+                    <td class="am-text-right">作者</td>
+                  </tr>
+                  {% for post in posts %}
+                  <tr class="row">
+                    <td class="am-link-muted">{{ time_span(post['time']) }}</td>
+                    <td><a href="/post/{{ post['_id'] }}">{{ post['title'] }}</a></td>
+                    <td class="am-text-center"><span class="am-badge am-badge-success">公开</span></td>
+                    <td class="am-text-right"><a href="/user/detail/{{ post['user'] }}">{{ post['user'] }}</a></td>
+                  </tr>
+                  {% end %}
+              </table>
+              <div class="am-panel-footer">
+                  {% raw pagenav(now = page, count = count, each = each, url = '/search/%d?keyword=' + escape(keyword)) %}
+                  <div class="am-cf"></div>
+              </div>
+            </div>
+        </div>
+        <div class="am-u-lg-3 am-hide-md-down">
+            {% include "self.htm" %}
+        </div>
+    </div>
+</div>
+
+{% end %}
+{% block footer_static %}
+    <script src="{{ static_url('assets/js/app.js') }}"></script>
+{% end %}

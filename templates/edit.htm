@@ -1,0 +1,54 @@
+{% extends "base.htm" %}
+
+{% block header_title %}文章编辑{% end %}
+{% block body %}
+{% include "header.htm" %}
+
+<div class="am-container">
+    <div class="am-g">
+        <form class="am-form" id="minos-pulish" method="post">
+            <div class="am-input-group am-margin-bottom" id="title-form">
+              <span class="am-input-group-label">文章标题</span>
+              <input type="text" name="title" class="am-form-field" value="{{ post['title'] }}">
+            </div>
+            <div class="am-form-group am-margin-bottom minos-width-6">
+              <div class="am-fl am-input-group-label">板块</div>
+              <div class="am-fl minos-dropdown">
+                  <select name="sort" data-am-selected>
+                    {% for row in sort %}
+                    <option value="{{ row['_id'] }}" {% if row['name'] == post.get('sort').get('name') %}selected{% end %}>{{ row['name'] }}</option>
+                    {% end %}
+                  </select>
+              </div>
+              <span class="am-form-caret am-cf"></span>
+            </div>
+            {% set text = flash['article'] %}
+            <textarea class="ckeditor" name="ckeditor">{{ post['content'] if not text else text }}</textarea>
+            <div class="am-padding-top"></div>
+            <div class="am-g">
+                <div class="am-input-group am-u-sm-4 am-u-lg-4">
+                  <span class="am-input-group-label">收费</span>
+                  <input type="text" class="am-form-field" name="charge" value="{{ post['charge'] }}">
+                  <span class="am-input-group-label">金币</span>
+                </div>
+                <div class="am-input-group am-u-sm-8 am-u-lg-8">
+                  <span class="am-input-group-label">免费时段</span>
+                  <input type="number" class="am-form-field" name="freebegin" value="{% if post.get('freeend') > post.get('freebegin') %}{{ post.get('freebegin') }}{% end %}" placeholder="0">
+                  <span class="am-input-group-label">到</span>
+                  <input type="number" class="am-form-field" name="freeend" placeholder="2" value="{% if post.get('freeend') %}{{ post.get('freeend') }}{% end %}">
+                </div>
+            </div>
+            <div class="am-padding-top"></div>
+            <button class="am-btn am-btn-success" type="submit">修改文章</button>
+            <input type="hidden" name="id" value="{{ post['_id'] }}" />
+            {% raw xsrf_form_html() %}
+        </form>
+    </div>
+</div>
+
+
+{% end %}
+{% block footer_static %}
+<script src="{{ static_url('assets/ckeditor/ckeditor.js') }}"></script>
+<script src="{{ static_url('assets/js/app.js') }}"></script>
+{% end %}

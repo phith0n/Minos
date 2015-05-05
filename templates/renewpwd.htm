@@ -1,0 +1,45 @@
+{% extends "base.htm" %}
+
+{% block header_title %}更换新密码{% end %}
+{% block body %}
+{% include "header.htm" %}
+<div class="am-g">
+  <div class="am-u-lg-5 am-u-md-6 am-u-sm-centered">
+    <div class="am-text-center am-margin-top-lg"><h2>填写新密码</h2></div>
+    <hr>
+
+    <form class="am-form am-form-horizontal" method="post">
+
+      <div class="am-form-group">
+        <label class="am-u-sm-3 am-form-label">新密码</label>
+        <div class="am-u-sm-9">
+          <input type="password" name="password" placeholder="填写你的邮箱">
+        </div>
+      </div>
+
+      <div class="am-form-group">
+        <label class="am-u-sm-3 am-form-label">重复密码</label>
+        <div class="am-u-sm-9">
+          <input type="password" placeholder="重复密码">
+        </div>
+      </div>
+
+      <div class="am-form-group">
+        <div class="am-text-right am-u-sm-12 am-g-collapse">
+            <div class="am-u-sm-8"></div>
+            <div class="am-u-sm-4">
+                <button type="submit" class="am-btn am-btn-secondary">更改密码</button>
+            </div>
+        </div>
+      </div>
+      <input type="hidden" name="auth" value="{{ auth }}">
+    {% raw xsrf_form_html() %}
+    </form>
+
+    <hr>
+  </div>
+</div>
+{% end %}
+{% block footer_static %}
+    <script src="{{ static_url('assets/js/nologin.js') }}"></script>
+{% end %}

@@ -1,0 +1,58 @@
+{% extends "base.htm" %}
+
+{% block header_title %}{{ current_user.get('username') }}喜欢的文章{% end %}
+{% block body %}
+{% include "header.htm" %}
+
+<div class="am-container">
+    <div class="am-g">
+        <div class="am-u-lg-9">
+            <div class="am-panel am-panel-default">
+              <div class="am-panel-hd">
+                <ol class="minos-breadcrumb am-breadcrumb am-breadcrumb-slash">
+                    <li><a href="/">首页</a></li>
+                    <li class="am-active">{{ current_user.get('username') }} 喜欢的文章</li>
+                </ol>
+              </div>
+              <div class="am-panel-bd minos-sorts">
+                  你总共顶过{{ count }}篇文章
+              </div>
+              <table class="am-table minos-list am-text-sm am-table-bordered am-table-hover am-scrollable-horizontal">
+                  <tr class="null am-primary">
+                    <td>作者</td>
+                    <td width="68%">标题</td>
+                    <td class="status" width="15%">板块</td>
+                    <td class="am-text-center" width="10%">操作</td>
+                  </tr>
+                  {% for post in posts %}
+                  <tr class="row">
+                    <td class="am-link-muted">{{ post['user'] }}</td>
+                    <td><a href="/post/{{ post['_id'] }}">{{ post['title'] }}</a></td>
+                    <td><a href="/sort/{{ post.get('sort').get('_id') }}">{{ post.get('sort').get('name') }}</a></td>
+                    <td class="am-text-center">
+                        <form method="post">
+                            <a class="am-badge am-badge-danger cancel-like">取消</a>
+                            <input type="hidden" name="postid" value="{{ post['_id'] }}">
+                            {% raw xsrf_form_html() %}
+                        </form>
+                    </td>
+                  </tr>
+                  {% end %}
+              </table>
+              <div class="am-panel-footer">
+                  {% raw pagenav(now = page, count = count, each = each, url = '/user/like/%d') %}
+                  <div class="am-cf"></div>
+              </div>
+            </div>
+        </div>
+        <div class="am-u-lg-3">
+            {% include "self.htm" %}
+        </div>
+    </div>
+</div>
+
+{% end %}
+{% block footer_static %}
+<script src="{{ static_url('assets/js/app.js') }}"></script>
+<script src="{{ static_url('assets/js/like.js') }}"></script>
+{% end %}

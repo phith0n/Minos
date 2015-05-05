@@ -1,0 +1,17 @@
+--index-url http://pypi.douban.com/simple/redis/
+--extra-index-url http://mirrors.aliyun.com/pypi/simple/
+--allow-external PIL
+--allow-unverified PIL
+tornado>=4.1
+motor>=0.4
+requests>=2.5.3
+rq>=0.5.0
+redis>=2.10.3
+pymongo==2.8.0
+bcrypt>=1.1.1
+pyyaml>=3.11
+PIL>=1.1.7
+wheezy.captcha>=0.1.44
+futures>=2.2.0
+xxtea>=0.2.1
+pycurl

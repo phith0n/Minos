@@ -1,0 +1,186 @@
+{% extends "base.htm" %}
+
+{% block header_title %}前台管理{% end %}
+{% block body %}
+{% include "header.htm" %}
+<div class="am-container minos-admin">
+    <div class="am-g am-panel am-panel-default">
+        <div class="am-container minos-panel">
+            <div class="am-g row">
+                <form method="post" action="/admin/addsort">
+                <div class="am-u-sm-6">
+                    <div class="am-input-group">
+                      <span class="am-input-group-label">增加分类</span>
+                      <input type="text" name="sort" class="am-form-field" placeholder="分类名">
+                    </div>
+                </div>
+                <div class="am-u-sm-1">
+                    <button type="submit" class="am-btn am-btn-default">提交</button>
+                </div>
+                <div class="am-u-sm-5">
+                    {% set alert = flash["addsort"] %}
+                    {% if alert %}
+                    <div class="am-alert am-alert-secondary minos-alert" data-am-alert>
+                    {{ alert }}
+                    </div>
+                    {% end %}
+                </div>
+                {% raw xsrf_form_html() %}
+                </form>
+            </div>
+            <div class="am-g row">
+                <form method="post" action="/admin/showsort">
+                <div class="am-u-sm-3">
+                    <input type="text" name="sort" class="am-form-field" placeholder="分类名">
+                </div>
+                <div class="am-u-sm-3 am-form">
+                      <div class="am-form-group am-form-select">
+                          <select name="isshow">
+                            <option value="show">首页显示</option>
+                            <option value="notshow">首页不显示</option>
+                          </select>
+                          <span class="am-form-caret"></span>
+                        </div>
+                </div>
+                <div class="am-u-sm-1">
+                    <button type="submit" class="am-btn am-btn-default">提交</button>
+                </div>
+                <div class="am-u-sm-5">
+                    {% set alert = flash["showsort"] %}
+                    {% if alert %}
+                    <div class="am-alert am-alert-secondary minos-alert" data-am-alert>
+                    {{ alert }}
+                    </div>
+                    {% end %}
+                </div>
+                {% raw xsrf_form_html() %}
+                </form>
+            </div>
+            <div class="am-g row">
+                <form method="post" action="/admin/delsort">
+                <div class="am-u-sm-6">
+                    <div class="am-input-group">
+                      <span class="am-input-group-label">删除分类</span>
+                      <input type="text" name="sort" class="am-form-field" placeholder="将删除分类下所有文章">
+                    </div>
+                </div>
+                <div class="am-u-sm-1">
+                    <button type="submit" class="am-btn am-btn-default">提交</button>
+                </div>
+                <div class="am-u-sm-5">
+                    {% set alert = flash["delsort"] %}
+                    {% if alert %}
+                    <div class="am-alert am-alert-secondary minos-alert" data-am-alert>
+                    {{ alert }}
+                    </div>
+                    {% end %}
+                </div>
+                {% raw xsrf_form_html() %}
+                </form>
+            </div>
+
+            <div class="am-g row fixpadding">
+                <form method="post" action="/admin/register">
+                    <div class="am-u-sm-6">
+                        <div class="am-form-group">
+                          <label class="am-checkbox-inline">
+                            <input type="radio" name="method" value="close"> 关闭注册
+                          </label>
+                          <label class="am-checkbox-inline">
+                            <input type="radio" name="method" value="open"> 开放注册
+                          </label>
+                          <label class="am-checkbox-inline">
+                            <input type="radio" name="method" value="invite"> 邀请注册
+                          </label>
+                        </div>
+                    </div>
+                    <div class="am-u-sm-1">
+                        <button type="submit" class="am-btn am-btn-default">提交</button>
+                    </div>
+                    <div class="am-u-sm-5">
+                        {% set alert = flash["register"] %}
+                        {% if alert %}
+                        <div class="am-alert am-alert-secondary minos-alert" data-am-alert>
+                        {{ alert }}
+                        </div>
+                        {% end %}
+                    </div>
+                    {% raw xsrf_form_html() %}
+                </form>
+            </div>
+            <div class="am-g row fixpadding">
+                <form method="post" action="/admin/invite">
+                    <div class="am-u-sm-6">
+                        <button type="button" class="am-btn am-btn-primary"
+                                data-am-modal="{target: '#invite-non-used', closeViaDimmer: 0, width: 400, height: 225}">
+                            查看可用的邀请码
+                        </button>
+
+                        <a href="/admin/?clearinvote=1" class="am-btn am-btn-warning">
+                            清理过期邀请码
+                        </a>
+                    </div>
+                    <div class="am-u-sm-1">
+                        <button type="submit" class="am-btn am-btn-default">生成</button>
+                    </div>
+                    <div class="am-u-sm-5">
+                        {% set alert = flash["invite"] %}
+                        {% if alert %}
+                        <div class="am-alert am-alert-secondary minos-alert" data-am-alert>
+                        {{ alert }}
+                        </div>
+                        {% end %}
+                    </div>
+                    {% raw xsrf_form_html() %}
+                </form>
+            </div>
+            <div class="am-g row">
+                <form method="post" action="/admin/user">
+                <div class="am-u-sm-3">
+                    <input type="text" name="username" class="am-form-field" placeholder="用户名">
+                </div>
+                <div class="am-u-sm-3 am-form">
+                      <div class="am-form-group am-form-select">
+                          <select name="method" id="doc-select-1">
+                            <option value="default">对用户执行操作</option>
+                            <option value="ban">封号</option>
+                            <option value="update">升级为管理员</option>
+                            <option value="unupdate">降级为普通用户</option>
+                            <option value="repass">重置密码</option>
+                          </select>
+                          <span class="am-form-caret"></span>
+                        </div>
+                </div>
+                <div class="am-u-sm-1">
+                    <button type="submit" class="am-btn am-btn-default">提交</button>
+                </div>
+                <div class="am-u-sm-5">
+                    {% set alert = flash["user"] %}
+                    {% if alert %}
+                    <div class="am-alert am-alert-secondary minos-alert" data-am-alert>
+                    {{ alert }}
+                    </div>
+                    {% end %}
+                </div>
+                {% raw xsrf_form_html() %}
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="am-modal am-modal-no-btn" tabindex="-1" id="invite-non-used">
+  <div class="am-modal-dialog">
+    <div class="am-modal-hd">没有使用的邀请码
+      <a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close>&times;</a>
+    </div>
+    <div class="am-modal-bd">
+      <textarea class="minos-textbox" rows="5" id="doc-ta-1">{{ codes }}</textarea>
+    </div>
+  </div>
+</div>
+
+{% end %}
+{% block footer_static %}
+    <script src="{{ static_url('assets/js/app.js') }}"></script>
+{% end %}

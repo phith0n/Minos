@@ -1,0 +1,190 @@
+{% extends "base.htm" %}
+
+{% block header_title %}{{ user["username"] }}的资料{% end %}
+{% block body %}
+{% include "header.htm" %}
+
+<div class="am-container">
+    <div class="am-g">
+        <div class="am-u-lg-9 am-u-md-12 am-u-sm-12">
+            <div class="am-panel am-panel-default">
+              <div class="am-panel-bd minos-sorts">
+                  <div class="am-tabs" data-am-tabs="{noSwipe: 1}">
+                      <ul class="am-tabs-nav am-nav am-nav-tabs">
+                        <li class="am-active"><a href="#edit" class="am-link-muted">个人设置</a></li>
+                        <li><a class="am-link-muted" href="#notify">隐私/提醒</a></li>
+                        <li><a href="#account" class="am-link-muted">账号绑定</a></li>
+                      </ul>
+                      <div class="am-tabs-bd">
+                          <div class="am-tab-panel am-active am-margin-top" id="edit">
+                                <form class="am-form am-form-horizontal" method="post">
+                                  <div class="am-form-group am-form-group-sm">
+                                    <label class="am-u-lg-2 am-u-md-2 am-u-sm-3 am-form-label">用户名</label>
+                                    <div class="am-u-lg-6 am-u-md-6 am-u-sm-9">
+                                      <input disabled type="text" class="am-form-field" value="{{ user.get('username') }}">
+                                    </div>
+                                    <div class="am-u-lg-4 am-u-md-4" id="check-username"></div>
+                                  </div>
+
+                                  <div class="am-form-group am-form-group-sm">
+                                    <label class="am-u-lg-2 am-u-md-2 am-u-sm-3 am-form-label">电子邮件</label>
+                                    <div class="am-u-lg-6 am-u-md-6 am-u-sm-9">
+                                      <input type="text" name="email" class="am-form-field" placeholder="输入你的电子邮件" value="{{ user.get('email') }}">
+                                    </div>
+                                    <div class="am-u-lg-4 am-u-md-4" id="check-email"></div>
+                                  </div>
+
+                                  <div class="am-form-group am-form-group-sm">
+                                    <label class="am-u-lg-2 am-u-md-2 am-u-sm-3 am-form-label">个人主页</label>
+                                    <div class="am-u-lg-6 am-u-md-6 am-u-sm-9">
+                                      <input type="text" name="website" class="am-form-field" placeholder="http://" value="{{ user.get('website') }}">
+                                    </div>
+                                    <div class="am-u-lg-4 am-u-md-4" id="check-website"></div>
+                                  </div>
+
+                                  <div class="am-form-group am-form-group-sm">
+                                    <label class="am-u-lg-2 am-u-md-2 am-u-sm-3 am-form-label">QQ号</label>
+                                    <div class="am-u-lg-6 am-u-md-6 am-u-sm-9">
+                                      <input type="text" name="qq" class="am-form-field" placeholder="10000" value="{{ user.get('qq') }}">
+                                    </div>
+                                    <div class="am-u-lg-4 am-u-md-4" id="check-qq"></div>
+                                  </div>
+
+                                  <div class="am-form-group am-form-group-sm">
+                                    <label class="am-u-lg-2 am-u-md-2 am-u-sm-3 am-form-label">地址</label>
+                                    <div class="am-u-lg-6 am-u-md-6 am-u-sm-9">
+                                      <input type="text" name="address" class="am-form-field" placeholder="邮寄礼品等" value="{{ user.get('address') }}">
+                                    </div>
+                                    <div class="am-u-lg-4 am-u-md-4" id="check-address"></div>
+                                  </div>
+
+                                  <div class="am-form-group am-form-group-sm">
+                                    <label class="am-u-lg-2 am-u-md-2 am-u-sm-3 am-form-label">签名</label>
+                                    <div class="am-u-lg-6 am-u-md-6 am-u-sm-9">
+                                      <textarea rows="4" name="signal" placeholder="一个帅气的黑客" class="minos-textbox">{{ user.get('signal') }}</textarea>
+                                    </div>
+                                    <div class="am-u-lg-4 am-u-md-4" id="check-signal"></div>
+                                  </div>
+
+                                  <hr />
+
+                                  <div class="am-form-group am-form-group-sm">
+                                    <label class="am-u-lg-2 am-u-md-2 am-u-sm-3 am-form-label">原密码</label>
+                                    <div class="am-u-lg-6 am-u-md-6 am-u-sm-9">
+                                      <input type="password" name="orgpass" class="am-form-field" placeholder="不修改密码则无需填写">
+                                    </div>
+                                    <div class="am-u-lg-4 am-u-md-4" id="check-orgpass"></div>
+                                  </div>
+                                  <div class="am-form-group am-form-group-sm">
+                                    <label class="am-u-lg-2 am-u-md-2 am-u-sm-3 am-form-label">新密码</label>
+                                    <div class="am-u-lg-6 am-u-md-6 am-u-sm-9">
+                                      <input type="password" name="password" class="am-form-field" placeholder="新密码">
+                                    </div>
+                                    <div class="am-u-lg-4 am-u-md-4" id="check-password"></div>
+                                  </div>
+                                  <div class="am-form-group am-form-group-sm">
+                                    <label class="am-u-lg-2 am-u-md-2 am-u-sm-3 am-form-label">重复密码</label>
+                                    <div class="am-u-lg-6 am-u-md-6 am-u-sm-9">
+                                      <input type="password" name="repassword" class="am-form-field" placeholder="重复新密码">
+                                    </div>
+                                    <div class="am-u-lg-4 am-u-md-4" id="check-repassword"></div>
+                                  </div>
+
+                                  <div class="am-form-group am-form-group-sm">
+                                    <div class="am-u-lg-6 am-u-lg-offset-2 am-u-md-offset-2 am-u-md-6 am-u-sm-9 am-u-sm-offset-3">
+                                      <button type="submit" class="am-btn am-btn-default am-form-field">提交修改</button>
+                                    </div>
+                                  </div>
+                                  {% raw xsrf_form_html() %}
+                                </form>
+                          </div>
+                          <div class="am-tab-panel am-margin-top" id="notify">
+                              <form class="am-form am-form-horizontal" method="post" action="/user/message">
+                                  <div class="am-form-group am-form-group-sm">
+                                    <label class="am-u-lg-2 am-u-sm-4 am-form-label">公开个人主页</label>
+                                    <div class="am-u-lg-6 am-u-sm-8">
+                                      <label class="am-radio-inline">
+                                        {% raw radio(user, 'openwebsite', 1) %} 是
+                                      </label>
+                                      <label class="am-radio-inline">
+                                        {% raw radio(user, 'openwebsite', 0) %} 否
+                                      </label>
+                                    </div>
+                                    <div class="am-u-lg-4" id="check-allowfollow"></div>
+                                  </div>
+                                  <div class="am-form-group am-form-group-sm">
+                                    <label class="am-u-lg-2 am-u-sm-4 am-form-label">公开Email</label>
+                                    <div class="am-u-lg-6 am-u-sm-8">
+                                      <label class="am-radio-inline">
+                                        {% raw radio(user, 'openemail', 1) %} 是
+                                      </label>
+                                      <label class="am-radio-inline">
+                                        {% raw radio(user, 'openemail', 0) %} 否
+                                      </label>
+                                    </div>
+                                    <div class="am-u-lg-4" id="check-allowmessage"></div>
+                                  </div>
+                                  <div class="am-form-group am-form-group-sm">
+                                    <label class="am-u-lg-2 am-u-sm-4 am-form-label">公开QQ号码</label>
+                                    <div class="am-u-lg-6 am-u-sm-8">
+                                      <label class="am-radio-inline">
+                                        {% raw radio(user, 'openqq', 1) %} 接受
+                                      </label>
+                                      <label class="am-radio-inline">
+                                        {% raw radio(user, 'openqq', 0) %} 不接受
+                                      </label>
+                                    </div>
+                                    <div class="am-u-lg-4" id="check-replynotify"></div>
+                                  </div>
+                                  <div class="am-form-group am-form-group-sm">
+                                    <label class="am-u-lg-2 am-u-sm-4 am-form-label">允许Email提醒</label>
+                                    <div class="am-u-lg-6 am-u-sm-8">
+                                      <label class="am-radio-inline">
+                                        {% raw radio(user, 'allowemail', 1) %} 接受
+                                      </label>
+                                      <label class="am-radio-inline">
+                                        {% raw radio(user, 'allowemail', 0) %} 不接受
+                                      </label>
+                                    </div>
+                                    <div class="am-u-lg-4" id="check-focusnotify"></div>
+                                  </div>
+                                  <div class="am-form-group am-form-group-sm">
+                                      <div class="am-u-lg-8 am-u-sm-12">
+                                          <button type="submit" class="am-btn am-btn-default am-form-field">提交修改</button>
+                                      </div>
+                                  </div>
+                                  {% raw xsrf_form_html() %}
+                              </form>
+                          </div>
+                          <div class="am-tab-panel" id="account">
+                              <div class="am-g am-padding-top">
+                                <div class="am-u-lg-4 am-text-right">
+                                    <a href="#" class="am-icon-btn am-success am-icon-weixin"></a><br/>
+                                    <button type="button" class="am-btn am-btn-success am-btn-xs am-margin-top-xs">绑定</button>
+                                </div>
+                                <div class="am-u-lg-4 am-text-center">
+                                    <a href="#" class="am-icon-btn am-danger am-icon-weibo"></a><br/>
+                                    <button type="button" class="am-btn am-btn-danger am-btn-xs am-margin-top-xs">绑定</button>
+                                </div>
+                                <div class="am-u-lg-4 am-text-left">
+                                    <a href="#" class="am-icon-btn am-primary am-icon-qq"></a><br/>
+                                    <button type="button" class="am-btn am-btn-primary am-btn-xs am-margin-top-xs">绑定</button>
+                                </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+            </div>
+        </div>
+        <div class="am-u-lg-3 am-show-lg-only">
+            {% include "self.htm" %}
+        </div>
+    </div>
+</div>
+
+
+{% end %}
+{% block footer_static %}
+    <script src="{{ static_url('assets/js/app.js') }}"></script>
+{% end %}

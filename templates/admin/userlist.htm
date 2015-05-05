@@ -1,0 +1,61 @@
+{% extends "base.htm" %}
+{% block header_title %}用户管理 - 后台管理页面{% end %}
+
+{% block body %}
+<div class="am-cf admin-main">
+  {% include "sidebar.htm" %}
+
+  <!-- content start -->
+  <div class="admin-content">
+
+    <div class="am-cf am-padding">
+      <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">首页</strong> / <small>用户列表</small></div>
+    </div>
+
+    <div class="am-g">
+      <div class="am-u-lg-offset-8 am-u-lg-4 am-u-sm-12">
+        <form method="get">
+        <div class="am-input-group am-input-group-sm">
+              <input type="text" name="username" class="am-form-field" placeholder="搜索用户">
+              <span class="am-input-group-btn">
+                <button class="am-btn am-btn-default" type="submit">搜索</button>
+              </span>
+        </div>
+        </form>
+      </div>
+      <div class="am-u-sm-12">
+        <table class="am-table am-table-bd am-table-striped admin-content-table">
+          <thead>
+          <tr>
+            <th>ID</th><th>用户名</th><th>最近登录时间</th><th>金币</th><th>管理</th>
+          </tr>
+          </thead>
+          <tbody>
+          {% set i = 1 %}
+          {% for user in users %}
+          <tr>
+              <td>{{ i }}</td>
+              <td>{{ user["username"] }}</td>
+              <td><code>{{ humantime(user.get('logintime', user.get('time'))) }}</code></td>
+              <td><span class="am-badge am-badge-success">{{ user['money'] }}</span></td>
+              <td>
+                  <a class="am-btn am-btn-default am-btn-xs" href="/manage/userdetail/{{ user['username'] }}">查看详情</a>
+              </td>
+          </tr>
+          {% set i += 1 %}
+          {% end %}
+          </tbody>
+        </table>
+        {% raw pagenav(count = count, url = '/manage/user/%d' + search, each = each, now = page,
+          end = '<div class="am-margin-bottom"></div></ul>') %}
+      </div>
+    </div>
+
+  </div>
+  <!-- content end -->
+
+</div>
+
+<a class="am-icon-btn am-icon-th-list am-show-sm-only admin-menu" data-am-offcanvas="{target: '#admin-offcanvas'}"></a>
+
+{% end %}

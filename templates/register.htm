@@ -1,0 +1,82 @@
+{% extends "base.htm" %}
+
+{% block header_title %}用户注册{% end %}
+{% block body %}
+{% include "header.htm" %}
+<div class="am-g">
+  <div class="am-u-lg-5 am-u-md-6 am-u-sm-centered">
+    <div class="am-text-center am-margin-top-lg"><h2>注册</h2></div>
+    <hr>
+
+    <form class="am-form am-form-horizontal" method="post" id="register-box">
+    {% if error %}
+      <div class="am-alert am-alert-danger" data-am-alert>
+          <button type="button" class="am-close">&times;</button>
+          <p>{{ error }}</p>
+      </div>
+    {% end %}
+
+      {% if method == "invite" %}
+      <div class="am-form-group">
+        <label class="am-u-sm-3 am-form-label">邀请码</label>
+        <div class="am-u-sm-9">
+          <input type="text" id="doc-ipt-invite" name="invitecode" placeholder="">
+        </div>
+      </div>
+      {% end %}
+      {% set user_reg = flash['user_reg'] %}
+      {% if type(user_reg) is not dict %}
+        {% set user_reg = {'username':'','password':'','repassword':''} %}
+      {% end %}
+
+      <div class="am-form-group">
+        <label class="am-u-sm-3 am-form-label">用户名</label>
+        <div class="am-u-sm-9 alert">
+          <input type="text" name="username" value="{{ user_reg['username'] }}" placeholder="" required>
+        </div>
+      </div>
+
+      <div class="am-form-group">
+        <label class="am-u-sm-3 am-form-label">密码</label>
+        <div class="am-u-sm-9 alert">
+          <input type="password" minlength="5" name="password"
+                 placeholder="" required value="{{ user_reg['password'] }}">
+        </div>
+      </div>
+
+      <div class="am-form-group">
+        <label class="am-u-sm-3 am-form-label">重复密码</label>
+        <div class="am-u-sm-9 alert">
+          <input type="password" name="repassword" data-equal-to="[name='password']"
+                data-error-msg="两次输入的密码不相同" placeholder="" required value="{{ user_reg['repassword'] }}">
+        </div>
+      </div>
+
+      {% if handler.settings['captcha']['register'] %}
+      <div class="am-form-group">
+        <label class="am-u-sm-3 am-form-label">验证码</label>
+        <div class="am-u-sm-4">
+          <img src="/captcha.png" id="captcha" height="41" />
+        </div>
+        <div class="am-u-sm-5">
+          <input type="text" name="captcha" placeholder="">
+        </div>
+      </div>
+      {% end %}
+
+      <div class="am-form-group">
+        <div class="am-text-right am-u-sm-12">
+            <a href="/login" class="am-btn am-btn-default">登录</a>
+            <button type="submit" class="am-btn am-btn-secondary">注册平台</button>
+        </div>
+      </div>
+    {% raw xsrf_form_html() %}
+    </form>
+
+    <hr>
+  </div>
+</div>
+{% end %}
+{% block footer_static %}
+    <script src="{{ static_url('assets/js/nologin.js') }}"></script>
+{% end %}

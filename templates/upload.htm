@@ -1,0 +1,27 @@
+<script type='text/javascript'>
+window.parent.CKEDITOR.tools.callFunction({{ func }}, '{{ path }}', function(){
+    function setInfo(field, value, page){
+        page = page || 'info';
+        element = dialog.getContentElement( page, field );
+        if ( element )
+            element.setValue( value );
+    }
+    // Get the reference to a dialog window.
+    var element,
+        dialog = this.getDialog();
+    // Check if this is the Image dialog window.
+    if ( dialog.getName() == 'image' ) {
+        var path = '{{ path }}';
+        if(!path){
+            alert('{{ info }}');
+            return ;
+        }
+        var alt = '{{ orgname }}';
+        setInfo('txtUrl', path);
+        setInfo('htmlPreview', '<img src="'+path+'" />');
+        setInfo('txtAlt', alt);
+        dialog.selectPage('info');
+    }
+    return false;
+});
+</script>

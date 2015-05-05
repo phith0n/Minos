@@ -1,0 +1,7 @@
+*.DS_Store
+.idea/*
+*.py[cod]
+*.yaml
+*.so
+*.egg
+*.egg-info

@@ -1,0 +1,54 @@
+<header class="am-topbar am-topbar-inverse">
+    <div class="am-container">
+      <h1 class="am-topbar-brand">
+        <a class="am-text-ir" href="#">Minos</a>
+      </h1>
+
+      <button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-success am-show-sm-only"
+              data-am-collapse="{target: '#doc-topbar-collapse'}"><span class="am-sr-only">导航切换</span> <span
+          class="am-icon-bars"></span></button>
+
+      <div class="am-collapse am-topbar-collapse" id="doc-topbar-collapse">
+        <ul class="am-nav am-nav-pills am-topbar-nav">
+          {% if current_user %}
+          <li class="{% if topbar == 'home' %}am-active{% end %}"><a href="/">首页</a></li>
+          {% else %}
+          <li class="{% if topbar == 'home' %}am-active{% end %}"><a href="/public/list">首页</a></li>
+          <li class="{% if topbar == 'login' %}am-active{% end %}"><a href="/login">登录</a></li>
+          <li class="{% if topbar == 'register' %}am-active{% end %}"><a href="/register">注册</a></li>
+          {% end %}
+
+          {% if current_user and power == "admin" %}
+          <li class="{% if topbar == 'admin' %}am-active{% end %} am-hide-sm-down"><a href="/manage/index">管理</a></li>
+          {% end %}
+          {% if current_user %}
+          <li class="{% if topbar == 'message' %}am-active{% end %}"><a href="/message">我的消息
+              <span class="am-badge am-badge-success am-round" id="newmsg"></span></a></li>
+          <li class="am-dropdown" data-am-dropdown>
+            <a class="am-margin-right-xs am-dropdown-toggle" data-am-dropdown-toggle href="#">
+              个人中心 <span class="am-icon-caret-down"></span>
+            </a>
+            <ul class="am-dropdown-content">
+              <li class="am-dropdown-header">用户中心</li>
+              <li><a href="/user/detail/{{ current_user['username'] }}">我的主页</a></li>
+              <li><a href="/user/edit">个人设置</a></li>
+              <li><a href="/user/face" class="am-hide-sm-down">修改头像</a></li>
+              <li><a href="/user/quit">退出</a></li>
+            </ul>
+          </li>
+          <div class="am-topbar-left">
+              <a href="/publish" class="am-btn am-btn-secondary am-topbar-btn am-btn-sm">发表帖子</a>
+          </div>
+          {% end %}
+        </ul>
+
+        <form method="get" action="/search" class="am-topbar-form am-topbar-left am-form-inline am-topbar-right am-hide-md-only" role="search">
+          <div class="am-form-group">
+            <input type="text" name="keyword" class="am-form-field am-input-sm" placeholder="搜索文章">
+          </div>
+          <button type="submit" class="am-btn am-btn-default am-btn-sm">搜索</button>
+        </form>
+
+      </div>
+    </div>
+</header>

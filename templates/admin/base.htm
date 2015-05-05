@@ -1,0 +1,54 @@
+<!doctype html>
+<html class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>{% block header_title %}Site Title{% end %}</title>
+  <meta name="description" content="这是一个 index 页面">
+  <meta name="keywords" content="index">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <base href="{{ base_url }}">
+  <meta name="apple-mobile-web-app-title" content="Minos" />
+  <link rel="stylesheet" href="{{ static_url('assets/css/amazeui.min.css') }}"/>
+  <link rel="stylesheet" href="{{ static_url('assets/css/admin.css') }}">
+  {% block header_static %}{% end %}
+</head>
+<body>
+<!--[if lte IE 9]>
+<p class="browsehappy">你正在使用<strong>过时</strong>的浏览器，Amaze UI 暂不支持。 请 <a href="http://browsehappy.com/" target="_blank">升级浏览器</a>
+  以获得更好的体验！</p>
+<![endif]-->
+
+<header class="am-topbar admin-header">
+  <div class="am-topbar-brand">
+    <strong>Minos</strong> <small>后台管理面板</small>
+  </div>
+
+  <button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-success am-show-sm-only" data-am-collapse="{target: '#topbar-collapse'}"><span class="am-sr-only">导航切换</span> <span class="am-icon-bars"></span></button>
+
+  <div class="am-collapse am-topbar-collapse" id="topbar-collapse">
+
+    <ul class="am-nav am-nav-pills am-topbar-nav am-topbar-right admin-header-list">
+      <li class="am-hide-sm-only"><a href="javascript:;" id="admin-fullscreen"><span class="am-icon-arrows-alt"></span> <span class="admin-fullText">开启全屏</span></a></li>
+    </ul>
+  </div>
+</header>
+
+{% block body %}Hello world{% end %}
+
+<footer>
+  <hr>
+  <p class="am-padding-left">© 2015 Minos, Inc. Licensed under MIT license.</p>
+</footer>
+
+<!--[if (gte IE 9)|!(IE)]><!-->
+<script src="{{ static_url('assets/js/jquery.min.js') }}"></script>
+<script src="{{ static_url('assets/js/amazeui.min.js') }}"></script>
+<!--<![endif]-->
+{% block footer_static %}{% end %}
+<script src="{{ static_url('assets/js/app.js') }}"></script>
+<script src="{{ static_url('assets/js/admin.js') }}"></script>
+</body>
+</html>

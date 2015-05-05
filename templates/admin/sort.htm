@@ -1,0 +1,51 @@
+{% extends "base.htm" %}
+{% block header_title %}板块（节点）管理 - 后台管理页面{% end %}
+
+{% block body %}
+<div class="am-cf admin-main">
+  {% include "sidebar.htm" %}
+
+  <!-- content start -->
+  <div class="admin-content">
+
+    <div class="am-cf am-padding">
+      <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">首页</strong> / <small>板块（节点）管理</small></div>
+    </div>
+
+    <div class="am-g">
+      <div class="am-u-sm-12">
+        <table class="am-table am-table-bd am-table-striped admin-content-table">
+          <thead>
+          <tr>
+            <th>ID</th><th>版块名称</th><th>首页显示</th><th>文章数量</th><th>管理</th>
+          </tr>
+          </thead>
+          <tbody>
+          {% set i = 1 %}
+          {% for sort in sorts %}
+          <tr>
+              <td>{{ i }}</td>
+              <td><code>{{ sort['name'] }}</code></td>
+              <td>{% if sort['show'] %}是{% else %}否{% end %}</td>
+              <td><span class="am-badge am-badge-success">{{ sort.get('article') }}</span></td>
+              <td>
+                  <a class="am-btn am-btn-default am-btn-xs" href="/manage/sortdetail/{{ sort['_id'] }}">查看详情</a>
+              </td>
+          </tr>
+          {% set i += 1 %}
+          {% end %}
+          </tbody>
+        </table>
+        {% raw pagenav(count = count, url = '/manage/sort/%d', each = each, now = page,
+          end = '<div class="am-margin-bottom"></div></ul>') %}
+      </div>
+    </div>
+
+  </div>
+  <!-- content end -->
+
+</div>
+
+<a class="am-icon-btn am-icon-th-list am-show-sm-only admin-menu" data-am-offcanvas="{target: '#admin-offcanvas'}"></a>
+
+{% end %}

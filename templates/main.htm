@@ -1,0 +1,58 @@
+{% extends "base.htm" %}
+
+{% block header_title %}主页{% end %}
+{% block body %}
+{% include "header.htm" %}
+<div class="am-container">
+    <div class="am-g">
+        <div class="am-panel am-panel-default">
+          <div class="am-panel-hd">
+            <h3 class="am-panel-title">福利の社</h3>
+          </div>
+          <div class="am-panel-bd minos-sorts">
+              {% for sort in sorts %}
+              <a href="/sort/{{ sort['_id'] }}" class="am-btn am-btn-primary am-btn-xs">{{ sort["name"] }}</a>
+              {% end %}
+
+          </div>
+          <table class="am-table minos-list am-text-sm am-table-bordered am-table-hover am-scrollable-horizontal">
+              <tr class="null am-primary">
+                <td class="am-hide-sm-down">时间</td>
+                <td width="72%">标题</td>
+                <td width="8%" class="am-text-center am-hide-sm-down">状态</td>
+                <td class="am-text-right" width="10%">作者</td>
+              </tr>
+              {% for post in posts %}
+              <tr class="row">
+                <td class="am-link-muted am-hide-sm-down">{{ time_span(post['time']) }}</td>
+                <td>
+                    {% if post.get('star') %}<span class="am-text-primary">[精华]</span>{% end %}
+                    <a href="/post/{{ post['_id'] }}" >
+                        {{ post['title'] }}
+                    </a>
+                </td>
+                <td class="am-text-center am-hide-sm-down">
+                    {% if post['charge'] and current_user["username"] not in post["buyer"] %}
+                    <span class="am-badge am-badge-warning">{{ post['charge'] }}金币</span>
+                    {% elif current_user["username"] in post["buyer"] %}
+                    <span class="am-badge am-badge-secondary">已购买</span>
+                    {% else %}
+                    <span class="am-badge am-badge-success">免费</span>
+                    {% end %}
+                </td>
+                <td class="am-text-right"><a href="/user/detail/{{ post['user'] }}">{{ post['user'] }}</a></td>
+              </tr>
+              {% end %}
+          </table>
+          <div class="am-panel-footer">
+              {% raw pagenav(now = page, count = count, each = each, url = '/page/%d') %}
+              <div class="am-cf"></div>
+          </div>
+        </div>
+    </div>
+</div>
+
+{% end %}
+{% block footer_static %}
+    <script src="{{ static_url('assets/js/app.js') }}"></script>
+{% end %}

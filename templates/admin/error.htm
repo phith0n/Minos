@@ -1,0 +1,32 @@
+{% extends "base.htm" %}
+{% block header_title %}提示 - 后台管理页面{% end %}
+
+{% block body %}
+<div class="am-cf admin-main">
+  {% include "sidebar.htm" %}
+
+  <!-- content start -->
+  <div class="admin-content">
+
+    <div class="am-cf am-padding">
+      <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">提示页面</strong> / <small>{{ error_title }}</small></div>
+    </div>
+
+    <div class="am-g">
+        <div class="am-u-sm-12 am-u-md-8">
+            <div class="am-alert" data-am-alert>
+              <button type="button" class="am-close">&times;</button>
+              <p>{{ error_info }}</p>
+            </div>
+            <p class="am-text-sm"><a href="{{ error_jump }}">点击返回...</a></p>
+        </div>
+    </div>
+
+  </div>
+  <!-- content end -->
+
+</div>
+
+<a class="am-icon-btn am-icon-th-list am-show-sm-only admin-menu" data-am-offcanvas="{target: '#admin-offcanvas'}"></a>
+
+{% end %}

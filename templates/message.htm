@@ -1,0 +1,67 @@
+{% extends "base.htm" %}
+
+{% block header_title %}{{ current_user["username"] }}的信箱{% end %}
+{% block body %}
+{% include "header.htm" %}
+
+<div class="am-container">
+    <div class="am-g">
+        <div class="am-u-lg-9">
+            <div class="am-panel am-panel-default">
+                <div class="am-panel-hd">
+                    <ol class="minos-breadcrumb am-breadcrumb am-breadcrumb-slash">
+                        <li><a href="/">首页</a></li>
+                        <li class="am-active">{{ current_user['username'] }} 的信箱</li>
+                    </ol>
+                </div>
+                {% if messages %}
+                <ul class="am-list am-list-static am-list-border am-text-sm">
+                    {% for message in messages %}
+                        {% if not message['from'] %}
+                        {% set message['from'] = '系统' %}
+                        {% end %}
+                        {% if not message['read'] %}
+                        <li>{{ message['from'] }} 给 {{ message['to'] }} 的消息：
+                            <a href="/message/{{ message['_id'] }}"><strong>{{ message['content'] }}</strong></a></li>
+                        {% else %}
+                        <li>{{ message['from'] }} 给 {{ message['to'] }} 的消息：
+                            <a href="/message/{{ message['_id'] }}">{{ message['content'] }}</a></li>
+                        {% end %}
+                    {% end %}
+                </ul>
+                {% else %}
+                <div class="am-panel-bd">
+                    没有短消息哦
+                </div>
+                {% end %}
+            </div>
+        </div>
+        <div class="am-u-lg-3">
+            {% include "self.htm" %}
+            <div class="am-panel am-panel-default">
+                <div class="am-panel-hd">短消息管理</div>
+                <ul class="am-list am-list-static minos-admin-edit">
+                    <li><form action="/message" method="post" id="readall">
+                        <input name="method" value="readall" type="hidden">
+                        <a class="am-text-sm" href=""><span class="am-icon-remove"></span> &nbsp;全部已读</a>
+                        {% raw xsrf_form_html() %}
+                    </form></li>
+                </ul>
+                <ul class="am-list am-list-static minos-admin-edit">
+                    <li><form action="/message" method="post" id="deleteall">
+                        <input name="method" type="hidden" value="deleteall">
+                        <a class="am-text-sm" href=""><span class="am-icon-remove"></span> &nbsp;全部删除</a>
+                        {% raw xsrf_form_html() %}
+                    </form></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% end %}
+{% block footer_static %}
+    <script src="{{ static_url('assets/js/app.js') }}"></script>
+    <script src="{{ static_url('assets/js/message.js') }}"></script>
+{% end %}

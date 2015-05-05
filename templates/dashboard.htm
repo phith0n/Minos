@@ -1,0 +1,124 @@
+{% extends "base.htm" %}
+
+{% block header_title %}控制面板{% end %}
+{% block body %}
+{% include "header.htm" %}
+<div class="am-container">
+
+<!-- content start -->
+<div class="admin-content">
+
+  <div class="am-cf am-padding">
+    <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">任务</strong> / <small>Task</small></div>
+  </div>
+
+  <div class="am-tabs am-margin" data-am-tabs="{noSwipe: 1}" >
+    <ul class="am-tabs-nav am-nav am-nav-tabs">
+      <li class="am-active"><a href="#tab1">任务列表</a></li>
+      <li><a href="#tab2">增加任务</a></li>
+    </ul>
+
+    <div class="am-tabs-bd">
+      <div class="am-tab-panel am-fade am-in am-active" id="tab1">
+          <div class="am-g">
+              <div class="am-u-sm-12">
+                <table class="am-table am-table-bd am-table-striped admin-content-table">
+                  <thead>
+                  <tr>
+                      <th width="5%">#</th>
+                      <th width="45%">文件名</th>
+                      <th width="15%">大小</th>
+                      <th width="20%">进度</th>
+                      <th>管理</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  {% set i = 1 %}
+                  {% for task in tasks %}
+                  <tr>
+                      <td>{{ i }}</td>
+                      <td>{{ task['filename'] }}</td>
+                      <td>{{ getsize(task['savepath']) }}</td>
+                      <td><span
+                              class="am-badge am-badge-{% if task['finish'] > 0 %}success">已完成{% else %}warning">未完成{%
+                          end %}
+                      </span></td>
+                      <td>
+                          <div class="am-btn-group">
+                              <a class="am-btn am-btn-xs am-btn-default app-btn"
+                                 href="/user/download?key={{ task['_id'] }}" target="_blank">下载</a>
+                              <a class="am-btn am-btn-xs am-btn-default app-btn" name="delete-item"
+                                 id="{{ task['_id'] }}">删除
+                              </a>
+                          </div>
+                      </td>
+                  </tr>
+                  {% set i += 1 %}
+                  {% end %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          <div class="am-g"><div class="am-u-sm-12">
+            <ul class="am-pagination">
+              <li><a href="/{{ page - 1 }}">&laquo; Prev</a></li>
+              <li><a href="/{{ page + 1 }}">Next &raquo;</a></li>
+            </ul>
+          </div></div>
+      </div>
+
+      <div class="am-tab-panel am-fade" id="tab2">
+        <form class="am-form" method="post">
+
+          <div class="am-g am-margin-top">
+            <div class="am-u-sm-4 am-u-md-2 am-text-right">
+              下载链接
+            </div>
+            <div class="am-u-sm-8 am-u-md-10 am-u-end col-end">
+              <input type="text" class="am-input-sm" placeholder="http://" name="url" id="url">
+            </div>
+          </div>
+
+          <div class="am-g am-margin-top">
+            <div class="am-u-sm-4 am-u-md-2 am-text-right">
+              储存文件名
+            </div>
+            <div class="am-u-sm-8 am-u-md-4">
+              <input type="text" class="am-input-sm" name="filename" id="filename">
+            </div>
+            <div class="am-hide-sm-only am-u-md-6">为空则随机生成文件名</div>
+          </div>
+
+            <div class="am-g ">
+                <div class="am-u-sm-4 am-u-md-2 am-text-right"></div>
+                <div class="am-margin am-u-sm-10 am-margin-right-xs">
+                    <button type="submit" class="am-btn am-btn-primary am-btn-xs am-fr">提交保存</button>
+                  </div>
+            </div>
+        {% raw xsrf_form_html() %}
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>
+<!-- content end -->
+
+    <div class="am-modal am-modal-confirm" tabindex="-1" id="confirm-box">
+      <div class="am-modal-dialog">
+        <div class="am-modal-hd">MessageBox</div>
+        <div class="am-modal-bd">
+          确定删除这个任务？
+        </div>
+        <div class="am-modal-footer">
+          <span class="am-modal-btn" data-am-modal-cancel>取消</span>
+          <span class="am-modal-btn" data-am-modal-confirm>确定</span>
+        </div>
+      </div>
+    </div>
+
+</div>
+{% end %}
+{% block footer_static %}
+    <script src="{{ static_url('assets/js/app.js') }}"></script>
+{% end %}
