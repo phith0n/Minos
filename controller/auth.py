@@ -172,7 +172,7 @@ class LoginHandler(BaseHandler):
 				yield self.db.member.find_and_modify({"username": username},{
 					"$set": {
 						"logintime": time.time(),
-					    "loginip": self.request.headers.get("X-Real-Ip")
+					    "loginip": self.get_ipaddress()
 					}
 				})
 				self.redirect("/")
@@ -268,7 +268,7 @@ class RegisterHandler(BaseHandler):
 		    "openemail": 1,
 		    "allowemail": 1,
 		    "logintime": None,
-		    "loginip": self.request.headers.get('X-Real-Ip')
+		    "loginip": self.get_ipaddress()
 		}
 		model = UserModel()
 		if not model(user):

@@ -7,16 +7,19 @@ import controller.base
 
 tornado.options.define("port", default=8765, help="Run server on a specific port", type=int)
 tornado.options.define("host", default="localhost", help="Run server on a specific host")
+tornado.options.define("url", default=None, help="Url to show in HTML")
 tornado.options.parse_command_line()
 
+if not tornado.options.options.url:
+	tornado.options.options.url = "http://%s:%d" % (tornado.options.options.host, tornado.options.options.port)
+
 setting = {
-	"base_url": "http://%s" % (tornado.options.options.host, ),
+	"base_url": tornado.options.options.url,
 	"template_path": "templates",
     "cookie_secret": "s3cr3tk3y",
     "config_filename": "config.yaml",
     "compress_response": True,
     "default_handler_class": controller.base.NotFoundHandler,
-    "debug": True,
     "xsrf_cookies": True,
     "static_path": "static",
     "download": "./download",

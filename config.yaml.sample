@@ -11,6 +11,8 @@
   "init_money": !!int "10"
   "invite_expire": !!int "604800"
   "register": !!python/unicode "open"
+  "intranet": !!bool "false"
+  "debug": !!bool "false"
   "site":
     "description": "\u8FD9\u662F\u4E00\u4E2A\u79C1\u5BC6\u7684\u798F\u5229\u5171\u4EAB\
       \u793E\u533A\uFF0C\u5206\u4EAB\u4E00\u4E9B\u6709\u610F\u601D\u7684\u4E1C\u897F\
@@ -19,7 +21,7 @@
       ,\u793E\u533A,\u4E4C\u4E91"
     "webname": "Minos\u798F\u5229\u793E\u533A"
   "email":
-    "method": "mailgun"
+    "method": "none"
     "url": "https://api.mailgun.net/v3/domain"
     "key": "key-xxxxx"
     "sender": "root@domain"

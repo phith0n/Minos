@@ -122,6 +122,12 @@ class BaseHandler(SessionBaseHandler):
 		else:
 			return "%s/face/guest.png" % static_path
 
+	def get_ipaddress(self):
+		if self.settings["intranet"]:
+			return self.request.headers.get('X-Real-Ip')
+		else:
+			return self.request.remote_ip
+
 	def pagenav(self, count, url, each, now,
 	            pre = '<ul class="am-pagination am-fr admin-content-pagination">', end = '</ul>'):
 		_ret = ''
