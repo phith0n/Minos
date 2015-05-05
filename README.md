@@ -12,7 +12,7 @@
 	 - Secure by default原则：使用默认的安全机制，所有业务逻辑问题为安全让步。不符合安全的业务都没有被加入Minos。tornado框架及其安全理念对Minos的安全有突出贡献。  
 	 - 注入漏洞：tornado不允许嵌套解析，用户通过GET/POST传入的参数只是字符串，不会成为list或dict，所以正常情况下不会造成mongodb的注入。  
 	 - 文件上传：python将不会去解析用户上传的任何文件。另外Minos在用户上传时仍然会检查后缀，为防止XSS。  
-	 - XSS漏洞：Tornado框架原则上所有输出在模板里的变量都会经过“HTML实体化”，包括单引号，一般情况下不会存在XSS漏洞。另外，社区帖子内容为富文本，将经过富文本过滤器Python-XSS-Filter（https://github.com/phith0n/python-xss-filter）过滤并输出。  
+	 - XSS漏洞：Tornado框架原则上所有输出在模板里的变量都会经过“HTML实体化”，包括单引号，一般情况下不会存在XSS漏洞。另外，社区帖子内容为富文本，将经过富文本过滤器Python-XSS-Filter（ https://github.com/phith0n/python-xss-filter ）过滤并输出。  
 	 - CSRF漏洞：Tornado框架在开启xsrf\_cookies后，所有POST表单如果没有Token将不会被接受。Minos默认开启xsrf\_cookies，并且所有增删改查操作均通过POST进行。  
 	 - 密码存储：Minos中，用户密码使用bcrypt库计算哈希后存入数据库，加密方法类似Wordpress，不能被简单破译。  
  - 稳定：作者女座的性格处理所有已知问题，不允许一个warning。Minos已在debian上稳定运行多日。    
