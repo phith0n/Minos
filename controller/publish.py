@@ -78,7 +78,8 @@ class PublishHandler(BaseHandler):
 		    "star": False,
 		    "rank": 0,
 		    "comment": [],
-		    "open": False
+		    "open": False,
+		    "top": False
 		}
 		model = ArticleModel()
 		if not model(article):

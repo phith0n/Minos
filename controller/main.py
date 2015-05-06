@@ -15,7 +15,7 @@ class HomeHandler(BaseHandler):
 		page = intval(args[1])
 		if not page or page <= 0 : page = 1
 		cursor = self.db.article.find()
-		cursor.sort([('time', pymongo.DESCENDING)]).limit(limit).skip((page - 1) * limit)
+		cursor.sort([('top', pymongo.DESCENDING), ('time', pymongo.DESCENDING)]).limit(limit).skip((page - 1) * limit)
 		count = yield cursor.count()
 		posts = yield cursor.to_list(length = limit)
 		sorts = yield self.get_sort()

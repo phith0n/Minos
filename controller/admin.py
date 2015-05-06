@@ -19,28 +19,12 @@ class AdminHandler(BaseHandler):
 		if self.power != "admin":
 			self.redirect("/")
 
-	def get(self, *args, **kwargs):
-		self.home_action(*args, **kwargs)
-
 	def post(self, *args, **kwargs):
 		method = ("%s_action" % args[0]) if len(args) > 0 else "home_action"
 		if hasattr(self, method):
 			getattr(self, method)(*args, **kwargs)
 		else:
 			self.home_action(*args, **kwargs)
-
-	@tornado.web.asynchronous
-	@gen.coroutine
-	def home_action(self, *args, **kwargs):
-		codes = []
-		cursor = self.db.invite.find({
-			"used": {"$eq": False},
-		    "time": {"$gt": (time.time() - self.settings["invite_expire"])}
-		})
-		while (yield cursor.fetch_next):
-			codes.append(cursor.next_object()["code"])
-		codes = "\n".join(codes)
-		self.render("admin.htm", flash = self.flash, codes = codes)
 
 	@tornado.web.asynchronous
 	@gen.coroutine
@@ -110,6 +94,15 @@ class AdminHandler(BaseHandler):
 			}, {
 				"$set": {
 					"open": open
+				}
+			})
+		elif method in ("top", "notop"):
+			top = True if method == "top" else False
+			post = yield self.db.article.find_and_modify({
+				"_id": ObjectId(id)
+			}, {
+				"$set": {
+					"top": top
 				}
 			})
 		elif method == "del":

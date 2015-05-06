@@ -97,6 +97,16 @@ $(document).ready(function(){
 		}
 		return false;
 	})
+	$("#top a").on("click", function(){
+		if (this.hash == "#top") {
+			$("#open [name='method']").val('notop');
+			$("#open").submit();
+		}else if(this.hash == "#notop") {
+			$("#open [name='method']").val('top');
+			$("#open").submit();
+		}
+		return false;
+	})
 	$("#rank a").on("click", function(){
 		var rank = prompt("输入奖励或惩罚的分数");
 		if (!rank || parseInt(rank) == 0){

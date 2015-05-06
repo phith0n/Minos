@@ -182,6 +182,14 @@
                         {% raw xsrf_form_html() %}
                     </form>
                 </li>
+                <li>
+                    <form action="/admin/article" method="post" id="top">
+                        <input name="id" value="{{ post['_id'] }}" type="hidden">
+                        <input name="method" type="hidden">
+                        <a class="am-text-sm" href="#{{ 'top' if post.get('top') else 'notop' }}"><span class="am-icon-thumb-tack"></span>&ensp;{% if post.get('top') %}&nbsp;不置顶{% else %}&nbsp;置顶{% end %}</a>
+                        {% raw xsrf_form_html() %}
+                    </form>
+                </li>
                 {% end %}
               </ul>
             </div>
