@@ -1,7 +1,7 @@
-### Minos社区
+# Minos社区
 一个基于Tornado/Mongodb/Redis的简约社区系统。
 
-### Features
+### 特点
  - 简单：去除传统社区中多数不常用到的功能，保留精华。（这里向 http://zone.wooyun.org 学习）  
  - 高效：  
 	 - mongodb：数据库设计合理，以空间换取时间，尽量减少数据库查询次数。  
@@ -17,7 +17,7 @@
 	 - 密码存储：Minos中，用户密码使用bcrypt库计算哈希后存入数据库，加密方法类似Wordpress，不能被简单破译。  
  - 稳定：作者女座的性格处理所有已知问题，不允许一个warning。Minos已在debian上稳定运行多日。    
 
-### Files
+### 架构简要说明
 ```
 ├── controller(所有控制器)
 ├── download(无用，暂时留着)
@@ -32,7 +32,8 @@
 └── requirements.txt(python库依赖)
 ```
 
-### Installation/Running
+### 安装与运行步骤
+以下是安装步骤。  
 
  - 安装并运行Mongodb、Redis  
 	 - Mongodb: https://www.mongodb.org/   
@@ -79,7 +80,7 @@ http://stackoverflow.com/questions/21242107/pip-install-pil-dont-install-into-vi
 \- \-port=port 你的端口，默认为8765  
  \- \-url=url 显示在前端的域名*，默认为“http://” + host + “:” + port  
  
- \* 这里说明一下。Minos需要监听本地一个端口，默认为8765，则用户可以通过localhost:8765访问。但实际生产环境中，Minos一般搭建在内网，并通过nginx等服务器转发至外网，其URL可能是http://waf.science。那么，url实际上是显示在前端HTML HEAD &lt;base&gt;中的地址，而host与port才是实际上Minos监听的地址。  
+ \* 这里说明一下。Minos需要监听本地一个端口，默认为8765，则用户可以通过localhost:8765访问。但实际生产环境中，Minos一般搭建在内网，并通过nginx等服务器转发至外网，其URL可能是http://waf.science 。那么，url实际上是显示在前端HTML HEAD &lt;base&gt;中的地址，而host与port才是实际上Minos监听的地址。  
  如果你不用nginx做转发，想直接搭建Minos在外网服务器，那么只需./main.py --port=80 --url=http://yourdomain.com 即可。  
 
 ### Config.yaml
@@ -134,16 +135,78 @@ session配置段（redis）
 global段中的所有配置项，均会被注册（覆盖默认的）成为tornado中settings的键。  
 
  - captcha: 配置在评论、注册、登录时，是否需要填写验证码。
- - cookie_secret: Cookie认证密钥、全站加密密钥，请填写一个随机字符串，并不要被他人知道！！否则将会造成用户信息泄露。
+ - cookie\_secret: Cookie认证密钥、全站加密密钥，请填写一个随机字符串，并不要被他人知道！！否则将会造成用户信息泄露。
  - imagepath: 图片上传相对地址
  - init_money: 用户注册后初始金币数
- - invite_expire: 邀请码过期时间（单位秒）
+ - invite\_expire: 邀请码过期时间（单位秒）
  - register: 注册类型，有open、invite、close，分别为开放注册、邀请注册、关闭注册。
  - intranet: Minos是否运行于内网（是否为nginx转发），默认false
- - debug: 是否开启调试模式，默认false。
- - site: 站点的页面配置，分别有站点名称、关键词、描述。
- - email: 站点email配置，现仅有一种方式，mailgun。
+ - debug: 是否开启调试模式，默认false。  
+ - site: 站点的页面配置，分别有站点名称、关键词、描述。  
+ - email: 站点email配置，现仅有一种方式，mailgun。  
 
-以上配置中，captcha、cookie\_secret、init\_money、register、site可以在管理员后台进行修改，所以不必在安装时填写。
-cookie\_secret在后台修改时，需要Minos下次启动才会生效，谨记。
+以上配置中，captcha、cookie\_secret、init\_money、register、site可以在管理员后台进行修改，所以不必在安装时填写。  
+cookie\_secret在后台修改时，需要Minos下次启动才会生效，谨记。  
 
+### 邮件配置
+在config.yaml这一节中并没有详细说到email这一节点。  
+email是Minos发送邮件的邮件服务器配置，Minos将在用户允许的情况下，在发送站内提醒的同时通过邮件进行提醒。在用户填写了邮箱的情况下，也可以通过邮箱来找回密码。  
+现在暂时只支持调用maingun的API进行邮件的发送。Mailgun是国外一个非常好的免费邮件服务商，我们可以在mailgun获得一个API，通过HTTP请求发送邮件。  
+Mailgun地址：https://mailgun.com/   
+使用教程我就不多说了，Mailgun自己有详细说明。  
+
+```
+  "email":
+    "method": "none"
+    "url": "https://api.mailgun.net/v3/domain"
+    "key": "key-xxxxx"
+    "sender": "root@domain"
+```
+
+配置中，method的值为none时，将不发送邮件。  
+method为mailgun，则使用mailgun的方式发送邮件。当使用mailgun的方式发送邮件时，你需要填写url、key，即为mailgun给你的API Base URL和API Key。  
+sender是邮件中显示的发件人，格式可以邮箱，或者是类似如下：  
+
+	Excited User <mailgun@domain.com>
+
+格式：昵称 <邮箱>  
+
+### 使用nginx进行反向代理
+这是很重要的一章，我建议所有使用Minos的用户都使用nginx作为前端服务器。   
+nginx简单配置如下（余下提高性能的配置自行设定）：  
+
+```
+location / {
+        proxy_pass         http://127.0.0.1:8765;
+        proxy_set_header   Host $host;
+        proxy_set_header   X-Real-IP  $remote_addr;
+}
+
+location ~ ^/static/.*$
+{
+        expires      30d;
+}
+```
+
+程序默认监听在8765端口，所以proxy_pass http://127.0.0.1:8765;  （你需要根据你指定的端口来配置）
+`proxy_set_header   X-Real-IP  $remote_addr;  `
+这个很重要，因为Minos运行在内网，所以在程序中获取的remote\_ip是网关(nginx)的IP，所以在这里我们一定要将真实IP通过X-Real-IP传递过去。  
+同时，config.yaml中有一项为“intranet”（是否运行于内网），实际上就是影响IP获取的来源。如果intranet==True的话，IP将从X-Real-IP中获取。如果intranet==False的话，IP将直接从remote_ip获取。  
+所以我们需要将intranet设置为true。  
+
+### 注意事项
+ 1. Minos理论上支持py2/3，但实际上稳定运行于python2。而python3并没有测试。
+ 2. Minos不能也永远不会支持Windows环境，所以请不要在Windows下运行Minos。
+ 3. Minos无需初始化数据库，直接运行mongodb即可，无需手工创建db、table等。
+
+### TODO
+ 1. 编写数据库初始化脚本，用来：创建索引、初始化管理员。
+ 2. 增加SMTP方式的邮件发送方法。
+ 3. 编写测试脚本，在py2/3环境下进行测试。
+ 4. 增加多语言支持。
+ 5. 增加网站底部自定义，使之可以填写：备案信息、统计代码等。
+
+### LICENSE
+开源协议：MPL  
+请遵守MPL协议，对Minos进行二次开发与使用。
+你可以对Minos进行修改、使用，但版权属于原作者，未经作者许可不允许进行商业使用。  
