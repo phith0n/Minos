@@ -147,7 +147,7 @@ def intval(str):
 
 def nl2br(str):
 	str = tornado.escape.xhtml_escape(str)
-	return str.replace("\n", "<br />")
+	return str
 
 def dump(obj):
 	'''return a printable representation of an object for debugging'''
