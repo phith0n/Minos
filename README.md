@@ -15,7 +15,8 @@
 	 - XSS漏洞：Tornado框架原则上所有输出在模板里的变量都会经过“HTML实体化”，包括单引号，一般情况下不会存在XSS漏洞。另外，社区帖子内容为富文本，将经过富文本过滤器Python-XSS-Filter（ https://github.com/phith0n/python-xss-filter ）过滤并输出。  
 	 - CSRF漏洞：Tornado框架在开启xsrf\_cookies后，所有POST表单如果没有Token将不会被接受。Minos默认开启xsrf\_cookies，并且所有增删改查操作均通过POST进行。  
 	 - 密码存储：Minos中，用户密码使用bcrypt库计算哈希后存入数据库，加密方法类似Wordpress，不能被简单破译。  
- - 稳定：作者女座的性格处理所有已知问题，不允许一个warning。Minos已在debian上稳定运行多日。    
+ - 稳定：作者女座的性格处理所有已知问题，不允许一个warning。Minos已在debian上稳定运行多日。
+ - 响应式：框架AmazeUI是一个mobile first的前端框架，对于各种屏幕的适应性都很好，加上我在手机屏幕大小的情况下隐藏了很多不必要的功能，所以在手机端也能愉快地看文章啦~
 
 ### 架构简要说明
 ```
@@ -194,7 +195,7 @@ location / {
 `proxy_set_header   X-Real-IP  $remote_addr;  `
 这个很重要，因为Minos运行在内网，所以在程序中获取的remote\_ip是网关(nginx)的IP，所以在这里我们一定要将真实IP通过X-Real-IP传递过去。  
 同时，config.yaml中有一项为“intranet”（是否运行于内网），实际上就是影响IP获取的来源。如果intranet==True的话，IP将从X-Real-IP中获取。如果intranet==False的话，IP将直接从remote_ip获取。  
-所以我们需要将intranet设置为true。  
+所以我们需要将intranet设置为true。
 
 ### 后续更新
 请在非网站目录重新git clone一个minos（为防止更新程序出错破坏源代码），在这个minos根目录下执行其中的bin/update.py
