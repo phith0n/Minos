@@ -37,4 +37,5 @@ for (now_dir, _, file_list) in generator:
 			(dir, _) = os.path.split(remote_filename)
 			if not os.path.isdir(dir):
 				os.makedirs(dir)
+			print "[+] Update %s" % remote_filename
 			shutil.copyfile(file, remote_filename)
