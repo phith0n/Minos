@@ -105,7 +105,7 @@ class AdminHandler(BaseHandler):
 					"top": top
 				}
 			})
-			yield self.message(fromuser=None, touser=post["user"],
+			yield self.message(fromuser=None, touser=post["user"], jump="/post/%s" % id,
 			    content=u"你的文章《%s》被管理员%s了" % (post["title"], u"置顶" if top else u"取消置顶"))
 		elif method == "del":
 			post = yield self.db.article.find_and_modify({
@@ -119,7 +119,7 @@ class AdminHandler(BaseHandler):
 					"bookmark": {"id": id}
 				}
 			}, multi = True)
-			yield self.message(fromuser=None, touser=post["user"],
+			yield self.message(fromuser=None, touser=post["user"], jump="/post/%s" % id,
 			    content=u"你的文章《%s》被管理员删除了" % post["title"])
 			self.redirect("/")
 		elif method == "rank":
