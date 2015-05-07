@@ -105,6 +105,8 @@ class AdminHandler(BaseHandler):
 					"top": top
 				}
 			})
+			yield self.message(fromuser=None, touser=post["user"],
+			    content=u"你的文章《%s》被管理员%s了" % (post["title"], "置顶" if top else "取消置顶"))
 		elif method == "del":
 			post = yield self.db.article.find_and_modify({
 				"_id": ObjectId(id)

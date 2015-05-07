@@ -18,7 +18,7 @@ if not os.path.isdir(".git"):
 	print("%s is not a git directory" % os.getcwd())
 	sys.exit()
 
-os.system("git pull https://github.com/phith0n/Minos.git")
+os.system("git stash && git pull https://github.com/phith0n/Minos.git")
 www_dir = input("Input your www directory:")
 
 generator = os.walk("./")
