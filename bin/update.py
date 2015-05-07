@@ -34,4 +34,7 @@ for (now_dir, _, file_list) in generator:
 				if checksum_md5(file) != checksum_md5(remote_filename):
 					update = True
 		if update:
+			(dir, _) = os.path.split(remote_filename)
+			if not os.path.isdir(dir):
+				os.makedirs(dir)
 			shutil.copyfile(file, remote_filename)
