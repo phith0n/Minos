@@ -176,15 +176,17 @@ sender是邮件中显示的发件人，格式可以邮箱，或者是类似如�
 nginx简单配置如下（余下提高性能的配置自行设定）：  
 
 ```
-location / {
-        proxy_pass         http://127.0.0.1:8765;
-        proxy_set_header   Host $host;
-        proxy_set_header   X-Real-IP  $remote_addr;
+location ^~ /static/
+{
+        root /home/wwwroot/minos;
+        expires      30d;
 }
 
-location ~ ^/static/.*$
-{
-        expires      30d;
+location / {
+        proxy_pass_header Server;
+        proxy_set_header   Host $host;
+        proxy_set_header   X-Real-IP  $remote_addr;
+        proxy_pass         http://127.0.0.1:8765;
 }
 ```
 
