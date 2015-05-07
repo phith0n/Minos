@@ -12,7 +12,7 @@ class SortHandler(BaseHandler):
 	@gen.coroutine
 	def get(self, *args, **kwargs):
 		sortid = args[0]
-		limit = 1
+		limit = 15
 		page = intval(args[2])
 		if not page or page <= 0 : page = 1
 		sort = yield self.db.sort.find_one({

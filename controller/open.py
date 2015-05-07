@@ -131,7 +131,7 @@ class ListHandler(BaseHandler):
 	@tornado.web.asynchronous
 	@gen.coroutine
 	def get(self, *args, **kwargs):
-		limit = 10
+		limit = 15
 		page = intval(args[1])
 		if not page or page <= 0 : page = 1
 		cursor = self.db.article.find({
