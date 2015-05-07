@@ -166,9 +166,9 @@ $(document).ready(function(){
 	})
 	$(".minos-at").each(function(){
 		var txt = $(this).text();
-		txt = txt.replace(/@([a-zA-Z0-9_\-\u4e00-\u9fa5]+)/g, '<a href="/user/detail/$1">@$1</a>');
 		//666666
 		txt = txt.replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+		txt = txt.replace(/@([a-zA-Z0-9_\-\u4e00-\u9fa5]+)/g, '<a href="/user/detail/$1">@$1</a>');
 		$(this).html(txt);
 	});
 	(function(){
