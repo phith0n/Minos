@@ -173,7 +173,7 @@ sender是邮件中显示的发件人，格式可以邮箱，或者是类似如�
 格式：昵称 <邮箱>  
 
 ### 使用nginx进行反向代理
-这是很重要的一章，我建议所有使用Minos的用户都使用nginx作为前端服务器。   
+这是很重要的一章，我建议所有使用Minos的用户都使用nginx作为前端服务器。    
 nginx简单配置如下（余下提高性能的配置自行设定）：  
 
 ```
@@ -191,24 +191,24 @@ location / {
 }
 ```
 
-程序默认监听在8765端口，所以proxy_pass http://127.0.0.1:8765;  （你需要根据你指定的端口来配置）
-`proxy_set_header   X-Real-IP  $remote_addr;  `
-这个很重要，因为Minos运行在内网，所以在程序中获取的remote\_ip是网关(nginx)的IP，所以在这里我们一定要将真实IP通过X-Real-IP传递过去。
+程序默认监听在8765端口，所以proxy_pass http://127.0.0.1:8765;  （你需要根据你指定的端口来配置）   
+`proxy_set_header   X-Real-IP  $remote_addr;  `  
+这个很重要，因为Minos运行在内网，所以在程序中获取的remote\_ip是网关(nginx)的IP，所以在这里我们一定要将真实IP通过X-Real-IP传递过去。  
 同时，config.yaml中有一项为“intranet”（是否运行于内网），实际上就是影响IP获取的来源。如果intranet==True的话，IP将从X-Real-IP中获取。如果intranet==False的话，IP将直接从remote_ip获取。
-所以我们需要将intranet设置为true。
+所以我们需要将intranet设置为true。  
 
 ### 后续更新
-请在非网站目录重新git clone一个minos（为防止更新程序出错破坏源代码），在这个minos根目录下执行其中的bin/update.py
+请在非网站目录重新git clone一个minos（为防止更新程序出错破坏源代码），在这个minos根目录下执行其中的bin/update.py  
 
 	python bin/update.py
 
-则会自动调用git下载最新版Minos，完成后会提示用户输入网站目录，输入网站目录（如 /home/minos），则update.py会自动检查是否存在改动并进行覆盖更新。
-执行完成后，重启minos即可完成更新。
+则会自动调用git下载最新版Minos，完成后会提示用户输入网站目录，输入网站目录（如 /home/minos），则update.py会自动检查是否存在改动并进行覆盖更新。  
+执行完成后，重启minos即可完成更新。  
 
 ### 注意事项
  1. Minos理论上支持py2/3，但实际上稳定运行于python2。而python3并没有测试。
- 2. Minos不能也永远不会支持Windows环境，所以请不要在Windows下运行Minos。
- 3. Minos无需初始化数据库，直接运行mongodb即可，无需手工创建db、table等。
+ 2. Minos不能也永远不会支持Windows环境，所以请不要在Windows下运行Minos。  
+ 3. Minos无需初始化数据库，直接运行mongodb即可，无需手工创建db、table等。  
 
 ### TODO
  1. 编写数据库初始化脚本，用来：创建索引、初始化管理员。
@@ -219,5 +219,5 @@ location / {
 
 ### LICENSE
 开源协议：MPL  
-请遵守MPL协议，对Minos进行二次开发与使用。
+请遵守MPL协议，对Minos进行二次开发与使用。  
 你可以对Minos进行修改、使用，但版权属于原作者，未经作者许可不允许进行商业使用。  

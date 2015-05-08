@@ -37,7 +37,7 @@ class XssHtml(HTMLParser):
 				  'h5', 'h6', 'blockquote', 'ul', 'ol', 'tr', 'th', 'td',
 				  'hr', 'li', 'u', 'embed', 's', 'table', 'thead', 'tbody',
 				  'caption', 'small', 'q', 'sup', 'sub']
-	common_attrs = ["id", "style", "class", "name"]
+	common_attrs = ["style", "class", "name"]
 	nonend_tags = ["img", "hr", "br", "embed"]
 	tags_own_attrs = {
 		"img": ["src", "width", "height", "alt", "align"], 
