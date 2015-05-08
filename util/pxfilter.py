@@ -85,7 +85,7 @@ class XssHtml(HTMLParser):
 
 		attrs = []
 		for (key, value) in attdict.items():
-			attrs.append('%s="%s"' % (key, self.__htmlspecialchars(value)))
+			attrs.append('%s="%s"' % (key, self.__htmlspecialchars(value, True)))
 		attrs = (' ' + ' '.join(attrs)) if attrs else ''
 		self.result.append('<' + tag + attrs + end_diagonal + '>')
 
@@ -182,11 +182,14 @@ class XssHtml(HTMLParser):
 				del attrs[key]
 		return attrs
 
-	def __htmlspecialchars(self, html):
-		return html.replace("<", "&lt;")\
+	def __htmlspecialchars(self, html, strict=False):
+		html = html.replace("&", "&amp;").replace("<", "&lt;")\
 			.replace(">", "&gt;")\
 			.replace('"', "&quot;")\
 			.replace("'", "&#039;")
+		if strict:
+			html = html.replace("[", "&#91;").replace("]", "&#93;")
+		return html
 
 
 if "__main__" == __name__:
