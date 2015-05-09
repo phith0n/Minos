@@ -94,7 +94,10 @@ class PostHandler(BaseHandler):
 					    },
 					    "time": time.time()
 					}
-				}
+				},
+		        "$set": {
+			        "lastcomment": time.time()
+		        }
 			})
 		if post:
 			if self.current_user["username"] != post["user"]:

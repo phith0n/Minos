@@ -194,10 +194,6 @@ class XssHtml(HTMLParser):
 
 if "__main__" == __name__:
 	parser = XssHtml()
-	parser.feed("""<p><img src=1 onerror=alert(/xss/)></p><div class="left">
-		<a href='javascript:prompt(1)'><br />hehe</a></div>
-		<p id="test" onmouseover="alert(1)">&gt;M<svg>
-		<a href="https://www.baidu.com" target="self">MM</a></p>
-		<embed src='javascript:alert(/hehe/)' allowscriptaccess=always />""")
+	parser.feed("""<div onmouseover=alert(1) >""")
 	parser.close()
 	print(parser.getHtml())

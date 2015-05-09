@@ -79,7 +79,8 @@ class PublishHandler(BaseHandler):
 		    "rank": 0,
 		    "comment": [],
 		    "open": False,
-		    "top": False
+		    "top": False,
+		    "lastcomment": time.time()
 		}
 		model = ArticleModel()
 		if not model(article):

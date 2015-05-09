@@ -137,7 +137,7 @@ class ListHandler(BaseHandler):
 		cursor = self.db.article.find({
 			"open": True
 		})
-		cursor.sort([("top", pymongo.DESCENDING), ('time', pymongo.DESCENDING)]).limit(limit).skip((page - 1) * limit)
+		cursor.sort([("top", pymongo.DESCENDING), ("lastcomment", pymongo.DESCENDING), ('time', pymongo.DESCENDING)]).limit(limit).skip((page - 1) * limit)
 		count = yield cursor.count()
 		posts = yield cursor.to_list(length = limit)
 		self.render("open_list.htm", posts = posts, page = page,
