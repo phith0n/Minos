@@ -35,16 +35,16 @@ class XssHtml(HTMLParser):
 	allow_tags = ['a', 'img', 'br', 'strong', 'b', 'code', 'pre',
 				  'p', 'div', 'em', 'span', 'h1', 'h2', 'h3', 'h4',
 				  'h5', 'h6', 'blockquote', 'ul', 'ol', 'tr', 'th', 'td',
-				  'hr', 'li', 'u', 'embed', 's', 'table', 'thead', 'tbody',
-				  'caption', 'small', 'q', 'sup', 'sub']
+				  'hr', 'li', 'u', 's', 'table', 'thead', 'tbody',
+				  'caption', 'small', 'q', 'sup', 'sub', 'font']
 	common_attrs = ["data-indent", "class"]
 	nonend_tags = ["img", "hr", "br", "embed"]
 	tags_own_attrs = {
-		"img": ["src", "width", "height", "alt", "align"], 
-		"a": ["href", "target", "rel", "title"],
-		"embed": ["src", "width", "height", "type", "allowfullscreen", "loop", "play", "wmode", "menu"],
-		"table": ["border", "cellpadding", "cellspacing"],
-	    "pre": ["data-lang"]
+		"img": ["src", "width", "height", "alt"],
+		"a": ["href", "target"],
+		# "embed": ["src", "width", "height", "type", "allowfullscreen", "loop", "play", "wmode", "menu"],
+	    "pre": ["data-lang"],
+	    "font": ["color"]
 	}
 
 	def __init__(self, allows = []):
