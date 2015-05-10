@@ -44,6 +44,7 @@
     $('#doc-my-tabs').tabs({noSwipe: 1});
     $("[href='#back']").click(function(){
         history.back(-1);
+        return false;
     })
 
     var $fullText = $('.admin-fullText');

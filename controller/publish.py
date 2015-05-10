@@ -40,6 +40,9 @@ class PublishHandler(BaseHandler):
 		charge = intval(self.get_body_argument("charge", default=0))
 		freebegin = intval(self.get_body_argument("freebegin", default=0))
 		freeend = intval(self.get_body_argument("freeend", default=0))
+		if not title:
+			self.flash["article"] = content
+			self.custom_error("标题不能为空哦", jump = "/publish")
 		if charge < 0:
 			self.flash["article"] = content
 			self.custom_error("收费不能低于0", jump = "/publish")
