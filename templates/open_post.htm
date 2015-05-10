@@ -2,7 +2,7 @@
 
 {% block header_title %}{{ post["title"] }}{% end %}
 {% block header_static %}
-<link rel="stylesheet" href="{{ static_url('assets/ckeditor/plugins/codesnippet/lib/highlight/styles/default.css') }}">
+<link rel="stylesheet" href="{{ static_url('assets/highlightjs/default.min.css') }}">
 {% end %}
 {% block body %}
 {% include "header.htm" %}
@@ -132,7 +132,7 @@
 
 {% end %}
 {% block footer_static %}
-<script src="{{ static_url('assets/ckeditor/plugins/codesnippet/lib/highlight/highlight.pack.js') }}"></script>
+<script src="{{ static_url('assets/highlightjs/highlight.min.js') }}"></script>
 <script src="{{ static_url('assets/js/app.js') }}"></script>
 <script src="{{ static_url('assets/js/post.js') }}"></script>
 <script src="{{ static_url('assets/js/nologin.js') }}"></script>

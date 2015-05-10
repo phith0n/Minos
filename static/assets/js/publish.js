@@ -26,7 +26,12 @@ $(document).ready(function(){
 		  '|',
 		  'source',
 		],
-
+	  upload: {
+	    url: "/uploader",
+	    fileKey: "upload",
+	    connectionCount: 1,
+	    leaveConfirm: '正在上传文件，如果离开上传会自动取消'
+	  }
 	});
 	$("#publish").click(function(){
 		var title = $("[name='title']").val();

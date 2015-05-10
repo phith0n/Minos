@@ -184,14 +184,13 @@ class UploadHandler(BaseHandler):
 	@tornado.web.asynchronous
 	@gen.coroutine
 	def post(self, *args, **kwargs):
-		self.func = intval(self.get_argument("CKEditorFuncNum"))
 		now = time.time()
 		try:
 			if self.request.files:
 				file = self.request.files['upload'][0]
 				ext = os.path.splitext(file["filename"])[-1]
 				if ext not in (".png", ".gif", ".jpg", ".bmp", ".jpeg"):
-					self.end("", u"不允许上传此类后缀的文件哦")
+					self.end(False, u"不允许上传此类后缀的文件哦")
 				self.orgname = file["filename"]
 				filename = md5("%s%s" % (file["filename"], random_str(6))) + ext
 				folder = "%s/%s/%s" % (self.settings["imagepath"], humantime(now, "%Y%m"),
@@ -201,15 +200,18 @@ class UploadHandler(BaseHandler):
 				filename = "%s/%s" % (folder, filename)
 				with open(filename, "wb") as fin:
 					fin.write(file["body"])
-					fin.close()
-				self.end(filename, u"上传成功")
+				self.end(True, u"上传成功", filename)
 		except tornado.web.Finish, e:
 			pass
 		except:
 			import traceback
 			print traceback.print_exc()
-			self.end("", u"参数错误")
+			self.end(False, u"参数错误")
 
-	def end(self, path, info):
-		self.render("upload.htm", func = self.func, orgname = self.orgname, path = path, info = info)
+	def end(self, status, info, path = ""):
+		self.write({
+			"success": status,
+		    "msg": info,
+		    "file_path": path
+		})
 		raise tornado.web.Finish()
