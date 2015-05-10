@@ -116,6 +116,39 @@ article pre {
   padding: 0;
   margin: 0;
 }
+article *[data-indent="0"]{
+  margin-left: 0px;
+}
+article *[data-indent="1"]{
+  margin-left: 20px;
+}
+article *[data-indent="2"]{
+  margin-left: 40px;
+}
+article *[data-indent="3"]{
+  margin-left: 60px;
+}
+article *[data-indent="4"]{
+  margin-left: 80px;
+}
+article *[data-indent="5"]{
+  margin-left: 100px;
+}
+article *[data-indent="6"]{
+  margin-left: 120px;
+}
+article *[data-indent="7"]{
+  margin-left: 140px;
+}
+article *[data-indent="8"]{
+  margin-left: 160px;
+}
+article *[data-indent="9"]{
+  margin-left: 180px;
+}
+article *[data-indent="10"]{
+  margin-left: 200px;
+}
 hr.minos-hr {
 	margin-top: 1.0rem;
 	margin-bottom: 1.0rem;
