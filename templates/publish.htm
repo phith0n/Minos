@@ -23,7 +23,7 @@
               <span class="am-form-caret am-cf"></span>
             </div>
             {% set text = flash["article"] %}
-            <textarea class="ckeditor" name="ckeditor">{{ text }}</textarea>
+            <textarea id="editor" name="ckeditor">{{ text }}</textarea>
             <div class="am-padding-top"></div>
             <div class="am-g">
                 <div class="am-input-group am-u-sm-12 am-u-md-4 am-u-lg-4">
@@ -53,8 +53,15 @@
 
 
 {% end %}
+{% block header_static %}
+<link rel="stylesheet" href="{{ static_url('assets/simditor/styles/simditor.css') }}">
+{% end %}
+
 {% block footer_static %}
-<script src="{{ static_url('assets/ckeditor/ckeditor.js') }}"></script>
+<script src="{{ static_url('assets/simditor/scripts/module.js') }}"></script>
+<script src="{{ static_url('assets/simditor/scripts/hotkeys.js') }}"></script>
+<script src="{{ static_url('assets/simditor/scripts/uploader.js') }}"></script>
+<script src="{{ static_url('assets/simditor/scripts/simditor.js') }}"></script>
 <script src="{{ static_url('assets/js/publish.js') }}"></script>
 <script src="{{ static_url('assets/js/app.js') }}"></script>
 {% end %}

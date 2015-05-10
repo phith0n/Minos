@@ -1,5 +1,14 @@
 $(document).ready(function(){
-	hljs.initHighlightingOnLoad();
+	//hljs.initHighlightingOnLoad();
+	$("pre").each(function(i, block){
+		var lang = $(this).attr("data-lang");
+		if(lang)
+		{
+			$(this).attr("class", lang);
+			hljs.configure({languages: lang});
+			hljs.highlightBlock(block);
+		}
+	});
 	$("#like").on("click", function(){
 	    $.ajax({
 	        "url": "/ajax/like",

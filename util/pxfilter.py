@@ -44,6 +44,7 @@ class XssHtml(HTMLParser):
 		"a": ["href", "target", "rel", "title"],
 		"embed": ["src", "width", "height", "type", "allowfullscreen", "loop", "play", "wmode", "menu"],
 		"table": ["border", "cellpadding", "cellspacing"],
+	    "pre": ["data-lang"]
 	}
 
 	def __init__(self, allows = []):

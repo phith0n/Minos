@@ -147,6 +147,8 @@ class EditHandler(BaseHandler):
 		post["freebegin"] = intval(self.get_body_argument("freebegin", default=0))
 		post["freeend"] = intval(self.get_body_argument("freeend", default=0))
 
+		if not post["title"]:
+			self.custom_error("标题不能为空", content, id)
 		if post["charge"] < 0:
 			self.custom_error("收费不能低于0", content, id)
 		if post["freebegin"] > post["freeend"]:
