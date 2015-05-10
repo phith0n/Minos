@@ -24,7 +24,7 @@ class PublishHandler(BaseHandler):
 	def get(self, *args, **kwargs):
 		self.set_header("Content-Security-Policy", "default-src 'self'; script-src 'self' 'unsafe-eval' "
 		                                           "'unsafe-inline'; connect-src 'self'; img-src 'self' data:; "
-		                                           "style-src 'self' 'unsafe-inline'; font-src 'self'; frame-src 'self';")
+		                                           "style-src 'self' 'unsafe-inline'; font-src 'self' data:; frame-src 'self';")
 		cursor = self.db.sort.find()
 		sort = []
 		while (yield cursor.fetch_next):
@@ -118,7 +118,7 @@ class EditHandler(BaseHandler):
 	def get(self, *args, **kwargs):
 		self.set_header("Content-Security-Policy", "default-src 'self'; script-src 'self' 'unsafe-eval' "
 		                                           "'unsafe-inline'; connect-src 'self'; img-src 'self' data:; "
-		                                           "style-src 'self' 'unsafe-inline'; font-src 'self'; frame-src 'self';")
+		                                           "style-src 'self' 'unsafe-inline'; font-src 'self' data:; frame-src 'self';")
 		id = args[0]
 		post = yield self.db.article.find_one({
 			"_id": ObjectId(id)
