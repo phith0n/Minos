@@ -48,9 +48,9 @@ class AdminHandler(BaseHandler):
 			try:
 				yield self.db.invite.insert({
 					"code": code,
-				    "used": False,
-				    "user": "",
-				    "time": time.time()
+					"used": False,
+					"user": "",
+					"time": time.time()
 				})
 			except pymongo.errors.DuplicateKeyError:
 				pass
@@ -59,13 +59,13 @@ class AdminHandler(BaseHandler):
 			code = self.get_body_argument("code")
 			yield self.db.invite.remove({
 				"code": code,
-			    "used": False
+				"used": False
 			})
 			self.redirect("/manage/invite")
 		elif action == "expire":
 			yield self.db.invite.remove({
 				"time": {"$lt": (time.time() - self.settings["invite_expire"])},
-			    "used": {"$eq": False}
+				"used": {"$eq": False}
 			})
 			self.redirect("/manage/invite")
 		self.custom_error("方法错误，请重试")
@@ -86,7 +86,7 @@ class AdminHandler(BaseHandler):
 			})
 			content = u"你的文章《%s》被管理员" % post["title"] + (u"加精" if star else u"取消精华") + u"了"
 			yield self.message(fromuser=None, touser=post["user"], content=content,
-			                   jump="/post/%s" % id)
+							   jump="/post/%s" % id)
 		elif method in ("open", "close"):
 			open = True if method == "open" else False
 			post = yield self.db.article.find_and_modify({
@@ -106,7 +106,7 @@ class AdminHandler(BaseHandler):
 				}
 			})
 			yield self.message(fromuser=None, touser=post["user"], jump="/post/%s" % id,
-			    content=u"你的文章《%s》被管理员%s了" % (post["title"], u"置顶" if top else u"取消置顶"))
+				content=u"你的文章《%s》被管理员%s了" % (post["title"], u"置顶" if top else u"取消置顶"))
 		elif method == "del":
 			post = yield self.db.article.find_and_modify({
 				"_id": ObjectId(id)
@@ -120,7 +120,7 @@ class AdminHandler(BaseHandler):
 				}
 			}, multi = True)
 			yield self.message(fromuser=None, touser=post["user"], jump="/post/%s" % id,
-			    content=u"你的文章《%s》被管理员删除了" % post["title"])
+				content=u"你的文章《%s》被管理员删除了" % post["title"])
 			self.redirect("/")
 		elif method == "rank":
 			rank = intval(self.get_body_argument("rank"))
@@ -144,7 +144,7 @@ class AdminHandler(BaseHandler):
 				"$set": {"rank": rank}
 			})
 			yield self.message(fromuser=None, touser=post["user"],
-			    content=u"你的文章《%s》被管理员" % post["title"] + (u"奖励" if rank > 0 else u"扣除") + u"%d金币" % abs(rank),
+				content=u"你的文章《%s》被管理员" % post["title"] + (u"奖励" if rank > 0 else u"扣除") + u"%d金币" % abs(rank),
 				jump="/post/%s" % id)
 
 		self.redirect("/post/%s" % id)
@@ -157,9 +157,9 @@ class AdminHandler(BaseHandler):
 		yield self.db.article.find_and_modify({
 			"_id": ObjectId(postid),
 		}, {"$pull": {
-			    "comment": {
-				    "_id": {"$eq": ObjectId(comid)}
-			    }
+				"comment": {
+					"_id": {"$eq": ObjectId(comid)}
+				}
 			}
 		})
 		self.redirect("/post/%s" % postid)
@@ -218,8 +218,8 @@ class AdminHandler(BaseHandler):
 		config = self._read_config()
 		config["global"]["site"] = dict(
 			webname = self.get_body_argument("webname"),
-		    keyword = self.get_body_argument("keyword"),
-		    description = self.get_body_argument("description")
+			keyword = self.get_body_argument("keyword"),
+			description = self.get_body_argument("description")
 		)
 		config["global"]["init_money"] = intval(self.get_body_argument("init_money"))
 		config["global"]["register"] = self.get_body_argument("register")

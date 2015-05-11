@@ -23,8 +23,8 @@ class PublishHandler(BaseHandler):
 	@gen.coroutine
 	def get(self, *args, **kwargs):
 		self.set_header("Content-Security-Policy", "default-src 'self'; script-src 'self' 'unsafe-eval' "
-		                                           "'unsafe-inline'; connect-src 'self'; img-src 'self' data:; "
-		                                           "style-src 'self' 'unsafe-inline'; font-src 'self' data:; frame-src 'self';")
+													"'unsafe-inline'; connect-src 'self'; img-src 'self' data:; "
+													"style-src 'self' 'unsafe-inline'; font-src 'self' data:; frame-src 'self';")
 		cursor = self.db.sort.find()
 		sort = []
 		while (yield cursor.fetch_next):
@@ -66,24 +66,24 @@ class PublishHandler(BaseHandler):
 
 		article = {
 			"title": title,
-		    "content": content,
-		    "user": self.current_user["username"],
+			"content": content,
+			"user": self.current_user["username"],
 			"sort": tosort,
-		    "view": 0,
-		    "like": [],
-		    "unlike": [],
-		    "charge": charge,
-		    "time": time.time(),
-		    "freebegin": freebegin,
-		    "freeend": freeend,
-		    "buyer": [],
-		    "thanks": [],
-		    "star": False,
-		    "rank": 0,
-		    "comment": [],
-		    "open": False,
-		    "top": False,
-		    "lastcomment": time.time()
+			"view": 0,
+			"like": [],
+			"unlike": [],
+			"charge": charge,
+			"time": time.time(),
+			"freebegin": freebegin,
+			"freeend": freeend,
+			"buyer": [],
+			"thanks": [],
+			"star": False,
+			"rank": 0,
+			"comment": [],
+			"open": False,
+			"top": False,
+			"lastcomment": time.time()
 		}
 		model = ArticleModel()
 		if not model(article):
@@ -117,8 +117,8 @@ class EditHandler(BaseHandler):
 	@gen.coroutine
 	def get(self, *args, **kwargs):
 		self.set_header("Content-Security-Policy", "default-src 'self'; script-src 'self' 'unsafe-eval' "
-		                                           "'unsafe-inline'; connect-src 'self'; img-src 'self' data:; "
-		                                           "style-src 'self' 'unsafe-inline'; font-src 'self' data:; frame-src 'self';")
+													"'unsafe-inline'; connect-src 'self'; img-src 'self' data:; "
+													"style-src 'self' 'unsafe-inline'; font-src 'self' data:; frame-src 'self';")
 		id = args[0]
 		post = yield self.db.article.find_one({
 			"_id": ObjectId(id)
@@ -190,7 +190,7 @@ class UploadHandler(BaseHandler):
 				self.orgname = file["filename"]
 				filename = md5("%s%s" % (file["filename"], random_str(6))) + ext
 				folder = "%s/%s/%s" % (self.settings["imagepath"], humantime(now, "%Y%m"),
-				                          humantime(now, "%d"))
+											humantime(now, "%d"))
 				if not os.path.isdir(folder):
 					os.makedirs(folder)
 				filename = "%s/%s" % (folder, filename)
@@ -205,7 +205,7 @@ class UploadHandler(BaseHandler):
 	def end(self, status, info, path = ""):
 		self.write({
 			"success": status,
-		    "msg": info,
-		    "file_path": path
+			"msg": info,
+			"file_path": path
 		})
 		raise tornado.web.Finish()

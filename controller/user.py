@@ -191,9 +191,9 @@ class UserHandler(BaseHandler):
 		}, {
 			"$set": {
 				"openwebsite": openwebsite,
-			    "openqq": openqq,
-			    "openemail": openemail,
-			    "allowemail": allowemail
+				"openqq": openqq,
+				"openemail": openemail,
+				"allowemail": allowemail
 			}
 		})
 		self.redirect("/user/edit")

@@ -29,4 +29,4 @@ class SearchHandler(BaseHandler):
 		cursor.sort([('time', pymongo.DESCENDING)]).limit(limit).skip((page - 1) * limit)
 		posts = yield cursor.to_list(length = limit)
 		self.render("search.htm", posts = posts, page = page, keyword = keyword,
-		            time_span = time_span, count = count, each = limit)
+					time_span = time_span, count = count, each = limit)

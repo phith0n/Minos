@@ -43,9 +43,9 @@ class AdminHandler(BaseHandler):
 		})
 		count = {
 			"user": (yield user.count()),
-		    "article": (yield article.count()),
-		    "sort": (yield sort.count()),
-		    "active": (yield active.count())
+			"article": (yield article.count()),
+			"sort": (yield sort.count()),
+			"active": (yield active.count())
 		}
 		user.sort([('time', pymongo.DESCENDING)]).limit(10)
 		newusers = yield user.to_list(10)
@@ -119,10 +119,10 @@ class AdminHandler(BaseHandler):
 		act = {
 			"nouse": {"used": False},
 			"used": {"used": True},
-		    "expire": {
-		        "time": {"$lt": time.time() - self.settings["invite_expire"]},
-		        "used": False
-		    }
+			"expire": {
+				"time": {"$lt": time.time() - self.settings["invite_expire"]},
+				"used": False
+			}
 		}
 		where = act.get(where) if (where in act) else {}
 		limit = 15

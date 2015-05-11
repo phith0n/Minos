@@ -31,12 +31,12 @@ class PostHandler(BaseHandler):
 		charge = post.get("charge")
 		content = post.get('content')
 		template = u"<div class=\"hidecont am-panel am-panel-default\">" \
-		           u"<div class=\"am-panel-hd\">内容隐藏，付费以后才可以看哦</div>" \
-		           u"<div class=\"am-panel-bd\"><form method=\"post\" action=\"/buy\">需要" \
-		           + str(post['charge']) + \
-		           u"金币，点击 <button type=\"submit\" class=\"am-btn am-btn-default am-btn-xs\">购买</button>" \
-		           + self.xsrf_form_html() + u"<input name=\"id\" type=\"hidden\" " \
-		           u"value=\""+ str(post["_id"]) + u"\"></form></div></div>"
+					u"<div class=\"am-panel-hd\">内容隐藏，付费以后才可以看哦</div>" \
+					u"<div class=\"am-panel-bd\"><form method=\"post\" action=\"/buy\">需要" \
+					+ str(post['charge']) + \
+					u"金币，点击 <button type=\"submit\" class=\"am-btn am-btn-default am-btn-xs\">购买</button>" \
+					+ self.xsrf_form_html() + u"<input name=\"id\" type=\"hidden\" " \
+					u"value=\""+ str(post["_id"]) + u"\"></form></div></div>"
 		pattern = re.compile(r"\[hide\](.*?)\[/hide\]", re.S)
 		if charge == 0 or self.no_need_buy(post):
 			post["content"] = pattern.sub("\\1", content)
@@ -52,8 +52,8 @@ class PostHandler(BaseHandler):
 	@gen.coroutine
 	def get(self, *args, **kwargs):
 		self.set_header("Content-Security-Policy", "default-src 'self'; script-src bdimg.share.baidu.com 'self' 'unsafe-eval'; "
-		                                           "connect-src 'self'; img-src *.share.baidu.com nsclick.baidu.com 'self' data:; "
-		                                           "style-src 'self' 'unsafe-inline'; font-src 'self'; frame-src 'self';")
+													"connect-src 'self'; img-src *.share.baidu.com nsclick.baidu.com 'self' data:; "
+													"style-src 'self' 'unsafe-inline'; font-src 'self'; frame-src 'self';")
 		id = args[0]
 		post = yield self.db.article.find_one({
 			"_id": ObjectId(id)
@@ -88,16 +88,16 @@ class PostHandler(BaseHandler):
 					"comment": {
 						"_id": _id,
 						"content": content,
-					    "user": {
-						    "id": self.current_user["_id"],
-					        "username": self.current_user["username"]
-					    },
-					    "time": time.time()
+						"user": {
+							"id": self.current_user["_id"],
+							"username": self.current_user["username"]
+						},
+						"time": time.time()
 					}
 				},
-		        "$set": {
-			        "lastcomment": time.time()
-		        }
+				"$set": {
+					"lastcomment": time.time()
+				}
 			})
 		if post:
 			if self.current_user["username"] != post["user"]:
@@ -122,8 +122,8 @@ class PostHandler(BaseHandler):
 				assert self.current_user["username"] != username
 				assert username not in at
 				yield self.message(fromuser=None, touser=username,
-				    content=u"%s在文章《%s》中提到了你。" % (self.current_user["username"], title),
-				    jump="/post/%s#%s" % (postid, comid))
+					content=u"%s在文章《%s》中提到了你。" % (self.current_user["username"], title),
+					jump="/post/%s#%s" % (postid, comid))
 				at.append(username)
 			except:
 				continue
@@ -151,7 +151,7 @@ class BuyHandler(BaseHandler):
 			charge = int(post["charge"])
 			old = yield self.db.member.find_and_modify({
 				"username": {"$eq": self.current_user["username"]},
-			    "money": {"$gte": charge}
+				"money": {"$gte": charge}
 			}, {
 				"$inc": {"money": 0 - charge}
 			})

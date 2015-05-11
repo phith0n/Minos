@@ -27,7 +27,7 @@ class MessageHandler(BaseHandler):
 	def _readall_action(self):
 		yield self.db.message.update({
 			"to": self.current_user["username"],
-		    "read": False
+			"read": False
 		}, {
 			"$set": {"read": True}
 		}, multi = True)

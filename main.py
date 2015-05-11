@@ -16,27 +16,27 @@ if not tornado.options.options.url:
 setting = {
 	"base_url": tornado.options.options.url,
 	"template_path": "templates",
-    "cookie_secret": "s3cr3tk3y",
-    "config_filename": "config.yaml",
-    "compress_response": True,
-    "default_handler_class": controller.base.NotFoundHandler,
-    "xsrf_cookies": True,
-    "static_path": "static",
-    "download": "./download",
-    "session": {
-	    "driver": "redis",
-        "driver_settings": {
-	        "host": "localhost",
-            "port": 6379,
-            "db": 1
-        },
+	"cookie_secret": "s3cr3tk3y",
+	"config_filename": "config.yaml",
+	"compress_response": True,
+	"default_handler_class": controller.base.NotFoundHandler,
+	"xsrf_cookies": True,
+	"static_path": "static",
+	"download": "./download",
+	"session": {
+		"driver": "redis",
+		"driver_settings": {
+			"host": "localhost",
+			"port": 6379,
+			"db": 1
+		},
 		"force_persistence": False,
-        "cache_driver": True,
-        "cookie_config": {
-	        "httponly": True
-        },
-    },
-    "thread_pool": futures.ThreadPoolExecutor(4)
+		"cache_driver": True,
+		"cookie_config": {
+			"httponly": True
+		},
+	},
+	"thread_pool": futures.ThreadPoolExecutor(4)
 }
 
 # config file
@@ -66,13 +66,13 @@ except:
 
 application = tornado.web.Application([
 	(r"^/public/post/([a-f0-9]{24})", "controller.open.PostHandler"),
-    (r"^/public/list(/(\d*))?", "controller.open.ListHandler"),
+	(r"^/public/list(/(\d*))?", "controller.open.ListHandler"),
 	(r"^/(page/(\d+))?", "controller.main.HomeHandler"),
 	(r"^/login", "controller.auth.LoginHandler"),
 	(r"^/register", "controller.auth.RegisterHandler"),
 	(r"^/nologin/([a-z]+)", "controller.auth.AjaxHandler"),
 	(r"^/forgetpwd", "controller.auth.ForgetpwdHandler"),
-    (r"^/captcha\.png", "controller.auth.CaptchaHanlder"),
+	(r"^/captcha\.png", "controller.auth.CaptchaHanlder"),
 	(r"^/user/([a-z]+)(/(.*))?", "controller.user.UserHandler"),
 	(r"^/admin/([a-z]+)?", "controller.admin.AdminHandler"),
 	(r"^/publish", "controller.publish.PublishHandler"),
@@ -86,7 +86,7 @@ application = tornado.web.Application([
 	(r"^/message(/(\d+))?", "controller.message.MessageHandler"),
 	(r"^/message/([a-f0-9]{24})", "controller.message.DetailHandler"),
 	(r"^/manage/([a-z]+)(/(.*))?", "controller.dashboard.AdminHandler"),
-    (r"^/download/(.*)", "controller.download.DownloadHandler", {"path": "./download/"})
+	(r"^/download/(.*)", "controller.download.DownloadHandler", {"path": "./download/"})
 ], **setting)
 
 if __name__ == "__main__":

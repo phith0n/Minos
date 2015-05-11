@@ -26,24 +26,24 @@ class Sendemail:
 		url = "%s/messages" % self.url
 		data = self._parseurl({
 			"from": orgin,
-		    "to": to,
-		    "subject": title,
-		    "html": content
+			"to": to,
+			"subject": title,
+			"html": content
 		})
 		self.http_client.fetch(url, method = "POST", body = data, callback = callback, auth_username = "api", auth_password = self.key,
-		                  follow_redirects = True, validate_cert = False)
+							follow_redirects = True, validate_cert = False)
 
 if __name__ == "__main__":
 	def main():
 		setting = {
 			"url": "https://api.mailgun.net/v3/domain",
-		    "key": "key-xxxxx"
+			"key": "key-xxxxx"
 		}
 		Sendemail(setting).send(
 			title = u"你好，test",
-		    content=u"这是一封测试邮件",
-		    to=u"test@qq.com",
-		    orgin=u"postmaster@domain"
+			content=u"这是一封测试邮件",
+			to=u"test@qq.com",
+			orgin=u"postmaster@domain"
 		)
 
 	io_loop = ioloop.IOLoop.instance()

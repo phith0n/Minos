@@ -71,9 +71,9 @@ class AjaxHandler(BaseHandler):
 		bookmark = {
 			"id": str(post["_id"]),
 			"title": post["title"],
-		    "user": post["user"],
-		    "sort": post["sort"],
-		    "time": time.time()
+			"user": post["user"],
+			"sort": post["sort"],
+			"time": time.time()
 		}
 		ret = yield self.db.member.update({
 			"username": self.current_user["username"]
@@ -90,7 +90,7 @@ class AjaxHandler(BaseHandler):
 			self.json("fail", "post not exists!")
 		post = yield self.db.article.find_one({
 			"_id": ObjectId(id),
-		    "thanks": {"$nin": [self.current_user["username"]]}
+			"thanks": {"$nin": [self.current_user["username"]]}
 		})
 		if not post:
 			self.json("fail", "already thanks")
@@ -98,7 +98,7 @@ class AjaxHandler(BaseHandler):
 			self.json("fail", "cannot thanks to yourself")
 		old = yield self.db.member.find_and_modify({
 			"username": self.current_user["username"],
-		    "money": {"$gt": 0}
+			"money": {"$gt": 0}
 		}, {
 			"$inc": {"money": -1}
 		})
@@ -115,8 +115,8 @@ class AjaxHandler(BaseHandler):
 			"$push": {"thanks": self.current_user["username"]}
 		})
 		yield self.message(fromuser = None, touser = post["user"],
-		                   content = u"你的文章《%s》被%s感谢了" % (post["title"], self.current_user["username"]),
-		                   jump="/post/%s" % id)
+						   content = u"你的文章《%s》被%s感谢了" % (post["title"], self.current_user["username"]),
+						   jump="/post/%s" % id)
 		self.clear_cookie("flush_info")
 		self.json("success", "thanks success")
 
@@ -150,6 +150,6 @@ class AjaxHandler(BaseHandler):
 	def json(self, status, info):
 		self.write({
 			"status": status,
-		    "info": info
+			"info": info
 		})
 		raise tornado.web.Finish()

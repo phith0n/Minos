@@ -20,7 +20,7 @@ class AjaxHandler(BaseHandler):
 	def _json(self, status, info = ""):
 		data = {
 			"status": status,
-		    "info": info
+			"info": info
 		}
 		self.write(data)
 		raise tornado.web.Finish()
@@ -109,9 +109,9 @@ class ForgetpwdHandler(BaseHandler):
 			url = self.settings.get("base_url") + "/forgetpwd?auth=%s" % url_escape(svalue, False)
 			Sendemail(self.settings.get("email")).send(
 				to=user["email"],
-			    orgin="root@waf.science",
-			    title=u"找回密码 - %s" % self.settings["site"]["webname"],
-			    content=u"点击链接找回你的密码：<br /><a href=\"%s\">%s</a><br />如果你没有找回密码，请忽视这封邮件" % (url, url)
+				orgin="root@waf.science",
+				title=u"找回密码 - %s" % self.settings["site"]["webname"],
+				content=u"点击链接找回你的密码：<br /><a href=\"%s\">%s</a><br />如果你没有找回密码，请忽视这封邮件" % (url, url)
 			)
 			self.render("forgetpwd.htm", success = True)
 		# after users click url in their email, and submit a new password
@@ -172,7 +172,7 @@ class LoginHandler(BaseHandler):
 				yield self.db.member.find_and_modify({"username": username},{
 					"$set": {
 						"logintime": time.time(),
-					    "loginip": self.get_ipaddress()
+						"loginip": self.get_ipaddress()
 					}
 				})
 				self.redirect("/")
@@ -195,19 +195,19 @@ class RegisterHandler(BaseHandler):
 		BaseHandler.prepare(self)
 		self.error = {
 			"passworddiff": "两次输入的密码不相同",
-		    "usernameused": "用户已经注册过啦",
-		    "shortpassword": "密码长度不能少于5个字符",
-		    "invitecode": "邀请码错误或不存在",
-		    "invoteexpire": "邀请码过期啦",
-		    "closed": "网站已关闭注册",
-		    "captcha": "验证码错误",
+			"usernameused": "用户已经注册过啦",
+			"shortpassword": "密码长度不能少于5个字符",
+			"invitecode": "邀请码错误或不存在",
+			"invoteexpire": "邀请码过期啦",
+			"closed": "网站已关闭注册",
+			"captcha": "验证码错误",
 		}
 
 	def get(self, *args, **kwargs):
 		error = self.get_argument("error", default = "")
 		error = self.error.get(error)
 		self.render("register.htm", error = error, flash = self.flash,
-		            method = self.settings["register"])
+					method = self.settings["register"])
 
 	@tornado.web.asynchronous
 	@gen.coroutine
@@ -230,7 +230,7 @@ class RegisterHandler(BaseHandler):
 			code = self.get_argument("invitecode")
 			coderow = yield self.db.invite.find_one({
 				"code": {"$eq": code},
-			    "used": {"$eq": False}
+				"used": {"$eq": False}
 			})
 			if not coderow:
 				self.redirect("/register?error=invitecode")
@@ -253,22 +253,22 @@ class RegisterHandler(BaseHandler):
 		#插入用户
 		user = {
 			"username": username,
-		    "password": password,
-		    "power": 0,
-		    "money": self.settings["init_money"],
-		    "time": time.time(),
-		    "bookmark": [],
-		    "email": "",
-		    "qq": "",
-		    "website": "",
-		    "address": "",
-		    "signal": u"太懒，没有留下任何个人说明",
-		    "openwebsite": 1,
-		    "openqq": 1,
-		    "openemail": 1,
-		    "allowemail": 1,
-		    "logintime": None,
-		    "loginip": self.get_ipaddress()
+			"password": password,
+			"power": 0,
+			"money": self.settings["init_money"],
+			"time": time.time(),
+			"bookmark": [],
+			"email": "",
+			"qq": "",
+			"website": "",
+			"address": "",
+			"signal": u"太懒，没有留下任何个人说明",
+			"openwebsite": 1,
+			"openqq": 1,
+			"openemail": 1,
+			"allowemail": 1,
+			"logintime": None,
+			"loginip": self.get_ipaddress()
 		}
 		model = UserModel()
 		if not model(user):

@@ -43,8 +43,8 @@ class XssHtml(HTMLParser):
 		"img": ["src", "width", "height", "alt"],
 		"a": ["href", "target"],
 		# "embed": ["src", "width", "height", "type", "allowfullscreen", "loop", "play", "wmode", "menu"],
-	    "pre": ["data-lang"],
-	    "font": ["color"]
+		"pre": ["data-lang"],
+		"font": ["color"]
 	}
 
 	def __init__(self, allows = []):

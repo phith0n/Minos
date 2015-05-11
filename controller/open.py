@@ -20,11 +20,11 @@ class PostHandler(BaseHandler):
 		charge = post.get("charge")
 		content = post.get('content')
 		template = u"<div class=\"hidecont am-panel am-panel-default\">" \
-		           u"<div class=\"am-panel-hd\">隐藏内容，需要登录并付费之后才能查看哦</div>" \
-		           u"<div class=\"am-panel-bd\">需要" \
-		           + str(post['charge']) + \
-		           u"金币，点击 <a href=\"/login\">登录</a>" \
-		           + u"</div></div>"
+				   u"<div class=\"am-panel-hd\">隐藏内容，需要登录并付费之后才能查看哦</div>" \
+				   u"<div class=\"am-panel-bd\">需要" \
+				   + str(post['charge']) + \
+				   u"金币，点击 <a href=\"/login\">登录</a>" \
+				   + u"</div></div>"
 		pattern = re.compile(r"\[hide\](.*?)\[/hide\]", re.S)
 		if charge == 0:
 			post["content"] = pattern.sub("\\1", content)
@@ -40,14 +40,14 @@ class PostHandler(BaseHandler):
 	@gen.coroutine
 	def get(self, *args, **kwargs):
 		self.set_header("Content-Security-Policy", "default-src 'self'; script-src bdimg.share.baidu.com 'self' 'unsafe-eval'; "
-		                                           "connect-src 'self'; img-src *.share.baidu.com nsclick.baidu.com 'self' data:; "
-		                                           "style-src 'self' 'unsafe-inline'; font-src 'self'; frame-src 'self';")
+												   "connect-src 'self'; img-src *.share.baidu.com nsclick.baidu.com 'self' data:; "
+												   "style-src 'self' 'unsafe-inline'; font-src 'self'; frame-src 'self';")
 		id = args[0]
 		if self.current_user:
 			self.redirect("/post/%s" % id)
 		post = yield self.db.article.find_one({
 			"_id": ObjectId(id),
-		    "open": True
+			"open": True
 		})
 		if not post:
 			self.custom_error("注册登录后才能查看哦", jump = "/register")
@@ -79,11 +79,11 @@ class PostHandler(BaseHandler):
 					"comment": {
 						"_id": _id,
 						"content": content,
-					    "user": {
-						    "id": self.current_user["_id"],
-					        "username": self.current_user["username"]
-					    },
-					    "time": time.time()
+						"user": {
+							"id": self.current_user["_id"],
+							"username": self.current_user["username"]
+						},
+						"time": time.time()
 					}
 				}
 			})
@@ -110,8 +110,8 @@ class PostHandler(BaseHandler):
 				assert self.current_user["username"] != username
 				assert username not in at
 				yield self.message(fromuser=None, touser=username,
-				    content=u"%s在文章《%s》中提到了你。" % (self.current_user["username"], title),
-				    jump="/post/%s#%s" % (postid, comid))
+					content=u"%s在文章《%s》中提到了你。" % (self.current_user["username"], title),
+					jump="/post/%s#%s" % (postid, comid))
 				at.append(username)
 			except:
 				continue
@@ -141,7 +141,7 @@ class ListHandler(BaseHandler):
 		count = yield cursor.count()
 		posts = yield cursor.to_list(length = limit)
 		self.render("open_list.htm", posts = posts, page = page,
-		            time_span = time_span, count = count, each = limit)
+					time_span = time_span, count = count, each = limit)
 
 	def test(self):
 		pass

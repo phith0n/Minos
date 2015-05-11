@@ -17,8 +17,8 @@ class BaseHandler(SessionBaseHandler):
 
 	def prepare(self):
 		self.add_header("Content-Security-Policy", "default-src 'self'; script-src 'self' 'unsafe-eval'; "
-		                                           "connect-src 'self'; img-src 'self' data:; style-src 'self'; "
-		                                           "font-src 'self'; frame-src 'self'; ")
+												   "connect-src 'self'; img-src 'self' data:; style-src 'self'; "
+												   "font-src 'self'; frame-src 'self'; ")
 		self.add_header("X-Frame-Options", "deny")
 		self.add_header("X-XSS-Protection", "1; mode=block")
 		self.add_header("X-Content-Type-Options", "nosniff")
@@ -28,7 +28,7 @@ class BaseHandler(SessionBaseHandler):
 		self.check_login()
 		power = {
 			0: "user",
-		    20: "admin"
+			20: "admin"
 		}
 		if self.current_user and self.current_user.get("power") in power:
 			self.power = power[self.current_user["power"]]
@@ -44,9 +44,9 @@ class BaseHandler(SessionBaseHandler):
 			session = {
 				"_id": str(user["_id"]),
 				"username": user["username"],
-			    "power": user["power"],
-			    "money": user["money"],
-			    "login_time": time.time()
+				"power": user["power"],
+				"money": user["money"],
+				"login_time": time.time()
 			}
 			self.session.set("current_user", session)
 			return session
@@ -100,7 +100,7 @@ class BaseHandler(SessionBaseHandler):
 			error_status = kwargs.get("status", "warning")
 			error_jump = kwargs.get("jump", "#back")
 			self.render("error.htm", error_info = info, error_status = error_status,
-			            error_title = error_title, error_jump = error_jump)
+						error_title = error_title, error_jump = error_jump)
 		raise tornado.web.Finish()
 
 	def _write_config(self, config):
@@ -129,7 +129,7 @@ class BaseHandler(SessionBaseHandler):
 			return self.request.remote_ip
 
 	def pagenav(self, count, url, each, now,
-	            pre = '<ul class="am-pagination am-fr admin-content-pagination">', end = '</ul>'):
+				pre = '<ul class="am-pagination am-fr admin-content-pagination">', end = '</ul>'):
 		_ret = ''
 		_pre = pre
 		_end = end
@@ -172,11 +172,11 @@ class BaseHandler(SessionBaseHandler):
 	def message(self, touser, content, fromuser = None, jump = None):
 		ret = yield self.db.message.insert({
 			"from": fromuser,
-		    "to": touser,
-		    "content": content,
-		    "jump": jump,
-		    "time": time.time(),
-		    "read": False
+			"to": touser,
+			"content": content,
+			"jump": jump,
+			"time": time.time(),
+			"read": False
 		})
 		user = yield self.db.member.find_one({
 			"username": touser
@@ -185,7 +185,7 @@ class BaseHandler(SessionBaseHandler):
 			Sendemail(self.settings.get("email")).send(
 				title=u"来自%s的提醒：%s" % (self.settings["site"]["webname"], content),
 				content=u"%s <br /> <a href=\"%s%s\" target=\"_blank\">点击查看</a>"
-				        % (content, self.settings.get("base_url"), jump),
+						% (content, self.settings.get("base_url"), jump),
 				to=user["email"]
 			)
 		raise gen.Return(ret)

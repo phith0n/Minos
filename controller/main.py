@@ -20,7 +20,7 @@ class HomeHandler(BaseHandler):
 		posts = yield cursor.to_list(length = limit)
 		sorts = yield self.get_sort()
 		self.render("main.htm", posts = posts, sorts = sorts, page = page,
-		            time_span = time_span, count = count, each = limit)
+					time_span = time_span, count = count, each = limit)
 
 	@gen.coroutine
 	def get_sort(self):
