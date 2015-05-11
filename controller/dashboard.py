@@ -17,7 +17,11 @@ class AdminHandler(BaseHandler):
 			self.redirect("/")
 
 	def render(self, template_name, **kwargs):
-		super(AdminHandler, self).render("admin/%s" % template_name, **kwargs)
+		if self.power == "admin":
+			render = "admin/%s" % template_name
+		else:
+			render = template_name
+		super(AdminHandler, self).render(render, **kwargs)
 
 	def get(self, *args, **kwargs):
 		action = args[0] if len(args) else "index"

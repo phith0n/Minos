@@ -173,10 +173,6 @@ class UploadHandler(BaseHandler):
 	def prepare(self):
 		super(UploadHandler, self).prepare()
 		self.orgname = ''
-		self.set_header("X-Frame-Options", "SAMEORIGIN")
-		self.set_header("Content-Security-Policy", "default-src 'self'; script-src 'self' 'unsafe-eval' "
-		                                           "'unsafe-inline'; connect-src 'self'; img-src 'self' data:; "
-		                                           "style-src 'self' 'unsafe-inline'; font-src 'self'; frame-src 'self';")
 
 	def check_xsrf_cookie(self):
 		return True
@@ -204,8 +200,6 @@ class UploadHandler(BaseHandler):
 		except tornado.web.Finish, e:
 			pass
 		except:
-			import traceback
-			print traceback.print_exc()
 			self.end(False, u"参数错误")
 
 	def end(self, status, info, path = ""):
