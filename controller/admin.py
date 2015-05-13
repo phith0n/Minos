@@ -96,6 +96,8 @@ class AdminHandler(BaseHandler):
 					"open": open
 				}
 			})
+			yield self.message(fromuser=None, touser=post["user"], jump="/post/%s" % id,
+				content=u"你的文章《%s》被管理员%s了" % (post["title"], u"公开" if open else u"取消公开"))
 		elif method in ("top", "notop"):
 			top = True if method == "top" else False
 			post = yield self.db.article.find_and_modify({
