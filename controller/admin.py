@@ -216,6 +216,21 @@ class AdminHandler(BaseHandler):
 
 	@tornado.web.asynchronous
 	@gen.coroutine
+	def newsort_action(self, *args, **kwargs):
+		sort = dict(
+			name = self.get_body_argument("name"),
+			intro = self.get_body_argument("intro",default=None),
+			show = True if intval(self.get_body_argument("show", default=None)) else False,
+		    article = 0
+		)
+		model = SortModel()
+		if not model(sort):
+			self.custom_error(model.error_msg)
+		sort = yield self.db.sort.insert(sort)
+		self.redirect("/manage/sort")
+
+	@tornado.web.asynchronous
+	@gen.coroutine
 	def setting_action(self, *args, **kwargs):
 		config = self._read_config()
 		config["global"]["site"] = dict(

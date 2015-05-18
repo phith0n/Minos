@@ -105,6 +105,11 @@ class AdminHandler(BaseHandler):
 
 	@tornado.web.asynchronous
 	@gen.coroutine
+	def _view_newsort(self, arg):
+		self.render("newsort.htm")
+
+	@tornado.web.asynchronous
+	@gen.coroutine
 	def _view_setting(self, arg):
 		site = self.settings.get("site")
 		init_money = self.settings.get("init_money")
