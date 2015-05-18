@@ -1,0 +1,66 @@
+{% extends "base.htm" %}
+{% block header_title %}新增板块 - 后台管理页面{% end %}
+
+{% block body %}
+<div class="am-cf admin-main">
+  {% include "sidebar.htm" %}
+
+  <!-- content start -->
+  <div class="admin-content">
+
+    <div class="am-cf am-padding">
+      <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">首页</strong> /
+          <strong class="am-text-primary am-text-lg"><a href="/manage/sort">板块</a></strong> /
+          <small>新增板块</small></div>
+    </div>
+
+    <div class="am-g">
+
+      <div class="am-u-sm-12 am-u-md-4 am-u-md-push-8">
+
+      </div>
+
+      <div class="am-u-sm-12 am-u-md-8 am-u-md-pull-4">
+        <form class="am-form am-form-horizontal" method="post" action="/admin/newsort">
+          <div class="am-form-group">
+            <label class="am-u-sm-3 am-form-label">板块名</label>
+            <div class="am-u-sm-9">
+              <input name="name" type="text">
+            </div>
+          </div>
+
+          <div class="am-form-group">
+            <label class="am-u-sm-3 am-form-label">首页显示</label>
+            <div class="am-u-sm-9">
+              <select name="show">
+                  <option value="1">显示</option>
+                  <option value="0">不显示</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="am-form-group">
+            <label class="am-u-sm-3 am-form-label">板块说明</label>
+            <div class="am-u-sm-9">
+              <textarea name="intro" rows="5"></textarea>
+            </div>
+          </div>
+
+          <div class="am-form-group">
+            <div class="am-u-sm-9 am-u-sm-push-3">
+              <button type="submit" class="am-btn am-btn-primary">保存修改</button>
+            </div>
+          </div>
+          {% raw xsrf_form_html() %}
+        </form>
+      </div>
+    </div>
+
+  </div>
+  <!-- content end -->
+
+</div>
+
+<a class="am-icon-btn am-icon-th-list am-show-sm-only admin-menu" data-am-offcanvas="{target: '#admin-offcanvas'}"></a>
+
+{% end %}
