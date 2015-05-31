@@ -5,5 +5,5 @@
 *.so
 *.egg
 *.egg-info
-static/face/*
+static/face/*/*
 static/upimg/*
