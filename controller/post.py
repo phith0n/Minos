@@ -75,8 +75,8 @@ class PostHandler(BaseHandler):
 	@tornado.web.asynchronous
 	@gen.coroutine
 	def post(self, *args, **kwargs):
-		captcha = self.get_body_argument("captcha")
-		if not Captcha.check(captcha, self):
+		captcha = self.get_body_argument("captcha", default=None)
+		if self.settings["captcha"]["comment"] and not Captcha.check(captcha, self):
 			self.custom_error("验证码错误")
 		content = self.get_body_argument("content")
 		postid = self.get_body_argument("postid")
