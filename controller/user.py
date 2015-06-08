@@ -40,7 +40,7 @@ class UserHandler(BaseHandler):
 		if not arg : arg = self.current_user["username"]
 		username = self.get_query_argument("u", default = arg)
 		user = yield self.db.member.find_one({
-			"username": {"$eq": username}
+			"username": username
 		})
 		if not user:
 			self.custom_error("不存在这个用户")
