@@ -32,8 +32,9 @@ class RedisSession(SessionDriver):
         self.__create_redis_client()
         self.client.set(session_id, session_data)
         if expires:
-            delta_seconds = int((expires - datetime.utcnow()).total_seconds())
-            self.client.expire(session_id,delta_seconds)
+            td = expires - datetime.utcnow()
+            delta_seconds = int((td.microseconds + (td.seconds + td.days * 24 * 3600) * 10**6) / 10**6)
+            self.client.expire(session_id, delta_seconds)
 
     def clear(self, session_id):
         self.__create_redis_client()
