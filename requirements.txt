@@ -1,4 +1,4 @@
---index-url http://pypi.douban.com/simple/redis/
+--index-url http://pypi.douban.com/simple/
 --extra-index-url http://mirrors.aliyun.com/pypi/simple/
 --allow-external PIL
 --allow-unverified PIL

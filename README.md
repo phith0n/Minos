@@ -51,6 +51,7 @@
 
  - 安装依赖项
 
+        $ apt-get install libcurl4-openssl-dev
 		$ pip install -r requirements.txt
  
 安装中可能出现一些问题，主要原因是安装PIL/bcrypt等库的时候，可能会要求一些Linux下的依赖库。  
