@@ -77,11 +77,12 @@ http://stackoverflow.com/questions/21242107/pip-install-pil-dont-install-into-vi
 
  - 启动Mongodb、Redis、Minos
 
-		nohup ./main.py --host=waf.science --port=8765 --url=http://waf.science &
+		nohup ./main.py --host=waf.science --port=8765 --url=http://waf.science --config=./config.yaml &
 
-\- \-host=domain 你的域名，如waf.science，默认为localhost  
-\- \-port=port 你的端口，默认为8765  
- \- \-url=url 显示在前端的域名*，默认为“http://” + host + “:” + port  
+ \- \-host=domain 你的域名，如waf.science，默认为localhost
+ \- \-port=port 你的端口，默认为8765
+ \- \-url=url 显示在前端的域名*，默认为“http://” + host + “:” + port
+ \- \-config=config 配置文件所在路径，默认为当前目录下的config.yaml，正常情况下无需修改
  
  \* 这里说明一下。Minos需要监听本地一个端口，默认为8765，则用户可以通过localhost:8765访问。但实际生产环境中，Minos一般搭建在内网，并通过nginx等服务器转发至外网，其URL可能是http://waf.science 。那么，url实际上是显示在前端HTML HEAD &lt;base&gt;中的地址，而host与port才是实际上Minos监听的地址。  
  如果你不用nginx做转发，想直接搭建Minos在外网服务器，那么只需./main.py --port=80 --url=http://yourdomain.com 即可。  

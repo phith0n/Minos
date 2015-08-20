@@ -1,13 +1,17 @@
 #!/usr/bin/python
 import tornado.ioloop
 import tornado.web, tornado.options
-import motor, sys, os, yaml
+import motor
+import sys
+import os
+import yaml
 from concurrent import futures
 import controller.base
 
 tornado.options.define("port", default=8765, help="Run server on a specific port", type=int)
 tornado.options.define("host", default="localhost", help="Run server on a specific host")
 tornado.options.define("url", default=None, help="Url to show in HTML")
+tornado.options.define("config", default="./config.yaml", help="config file's full path")
 tornado.options.parse_command_line()
 
 if not tornado.options.options.url:
@@ -17,7 +21,7 @@ setting = {
 	"base_url": tornado.options.options.url,
 	"template_path": "templates",
 	"cookie_secret": "s3cr3tk3y",
-	"config_filename": "config.yaml",
+	"config_filename": tornado.options.options.config,
 	"compress_response": True,
 	"default_handler_class": controller.base.NotFoundHandler,
 	"xsrf_cookies": True,
