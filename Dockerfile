@@ -1,8 +1,8 @@
 FROM python:2-alpine
 
 RUN apk update && apk upgrade
-RUN apk --update add curl-dev gcc musl-dev libffi-dev build-base python-dev jpeg-dev zlib-dev \
-    && rm -f /var/cache/apk/* 
+RUN apk --update add curl-dev gcc musl-dev libffi-dev build-base python-dev jpeg-dev zlib-dev libfreetype \
+    && rm -f /var/cache/apk/*
 
 ENV LIBRARY_PATH=/lib:/usr/lib
 ENV WWW_PATH /opt/www

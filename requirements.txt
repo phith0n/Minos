@@ -8,5 +8,4 @@ wheezy.captcha
 futures
 xxtea
 pycurl
-pil
 pillow
