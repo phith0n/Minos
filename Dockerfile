@@ -21,9 +21,4 @@ RUN chown nobody:nogroup -R ${WWW_PATH}
 USER nobody
 VOLUME ["${CONFIG_FILE_PATH}"]
 EXPOSE 8080
-CMD ["/env/bin/python",
-     "main.py",
-     "--port", "8080",
-     "--url", "http://minos.leavesongs.com",
-     "--config", "${CONFIG_FILE_PATH}/config.yaml"
-    ]
+CMD ["/env/bin/python", "main.py", "--port", "8080", "--url", "http://minos.leavesongs.com", "--config", "${CONFIG_FILE_PATH}/config.yaml"]
