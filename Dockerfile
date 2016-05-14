@@ -1,7 +1,7 @@
 FROM python:2-alpine
 
 RUN apk update && apk upgrade
-RUN apk --update add curl-dev gcc musl-dev libffi-dev build-base python-dev jpeg-dev zlib-dev libfreetype \
+RUN apk --update add curl-dev gcc musl-dev libffi-dev build-base python-dev jpeg-dev zlib-dev freetype \
     && rm -f /var/cache/apk/*
 
 ENV LIBRARY_PATH=/lib:/usr/lib
