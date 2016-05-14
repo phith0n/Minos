@@ -1,6 +1,7 @@
 FROM python:2-alpine
 
-RUN apk --update add curl-dev gcc
+RUN apk update && apk upgrade
+RUN apk --update add curl-dev gcc musl-dev libffi-dev && rm -f /var/cache/apk/*
 
 ENV WWW_PATH /opt/www
 ENV CONFIG_FILE_PATH /etc/minos
