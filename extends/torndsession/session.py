@@ -105,24 +105,24 @@ class SessionManager(object):
                 driver = 'memory',
                 driver_settings = {'host':self,}, # use application to save session data.
                 force_persistence = True,
-        	cache_driver = True, # cache driver in application. 
-        	cookie_config = {'expires_days':10, 'expires':datetime.datetime.utcnow(),}, # tornado cookies configuration
+            cache_driver = True, # cache driver in application.
+            cookie_config = {'expires_days':10, 'expires':datetime.datetime.utcnow(),}, # tornado cookies configuration
             },
         )
-        driver:			default enum value: memory, file, redis, memcache. 
-        driver_settings:	the data driver need. settings may be the host, database, password, and so on.
-				redis settings as follow:
-				      driver_settings = {
-				      		      host = '127.0.0.1',
-						      port = '6379',
-						      db = 0, # where the session data to save.
-						      password = 'session_db_password', # if database has password
-				 	}
-        force_persistence:	default is False.
-				In default, session's data exists in memory only, you must persistence it by manual.
-				Generally, rewrite Tornado RequestHandler's prepare(self) and on_finish(self) to persist session data is recommended. 
-        		     	when this value set to True, session data will be force to persist everytime when it has any change.
-				
+        driver:            default enum value: memory, file, redis, memcache.
+        driver_settings:    the data driver need. settings may be the host, database, password, and so on.
+                redis settings as follow:
+                      driver_settings = {
+                                    host = '127.0.0.1',
+                              port = '6379',
+                              db = 0, # where the session data to save.
+                              password = 'session_db_password', # if database has password
+                     }
+        force_persistence:    default is False.
+                In default, session's data exists in memory only, you must persistence it by manual.
+                Generally, rewrite Tornado RequestHandler's prepare(self) and on_finish(self) to persist session data is recommended.
+                         when this value set to True, session data will be force to persist everytime when it has any change.
+
         """
         session_settings = self.handler.settings.get("session")
         if not session_settings: # use default
