@@ -1,6 +1,6 @@
 FROM python:2-alpine
 
-RUN apk --update add curl-dev
+RUN apk --update add curl-dev gcc
 
 ENV WWW_PATH /opt/www
 ENV CONFIG_FILE_PATH /etc/minos
