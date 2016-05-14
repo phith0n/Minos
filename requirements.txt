@@ -4,8 +4,9 @@ redis
 pymongo==2.8.0
 bcrypt
 pyyaml
-pillow
 wheezy.captcha
 futures
 xxtea
 pycurl
+pil
+pillow
