@@ -1,4 +1,12 @@
 # Minos社区
+
+由于技术栈已过时，Minos已弃用，后续不再更新。请使用如下项目进行替换：
+
+- https://www.youbbs.org/
+- https://bbs.xiuno.com/
+- https://www.discourse.org/
+- https://flarum.org/
+
 一个基于Tornado/Mongodb/Redis的简约社区系统。
 
 ### 特点
